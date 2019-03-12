@@ -5,7 +5,7 @@ const userConfig = require('./user-config');
 const defaultConfig = {
   'timeout': 10000,
   'logPath': path.join(__dirname, '../../logs/'),
-  'baseUrl': 'http://dev.oscart.com',
+  //'baseUrl': 'http://dev.oscart.com',
   //'baseUrl':'http://yapi.tools.oscart.com/mock/8'
   //http://yapi.tools.oscart.com/mock/8/api/test
 }
