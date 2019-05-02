@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-      <cheader></cheader>
+      <cheader selected="index"></cheader>
   </div>
 </template>
 

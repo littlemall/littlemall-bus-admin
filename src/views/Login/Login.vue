@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     handleSubmit ({ userName, password }) {
- 
+        this.$router.push('/');
     }
   }
 }

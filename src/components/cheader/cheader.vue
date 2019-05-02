@@ -7,12 +7,9 @@
             <img src="/img/icons/box-logo.png">
           </a>
           <div class="wrapper-header-nav-list">
-            <Menu mode="horizontal" active-name="1">
-              <MenuItem name="1">
-               <Icon type="md-home" />首页
-              </MenuItem>
-              <MenuItem name="2">
-                <Icon type="md-cube" />商品
+            <Menu mode="horizontal" :active-name="selected"  @on-select="itemclick">
+              <MenuItem :name="item.key" :key="item.key"  v-for="item in horizontalMnueData">
+                <Icon type="md-home"/>{{item.name}}
               </MenuItem>
               <MenuItem name="5">
                 <span class="ivu-avatar ivu-avatar-circle ivu-avatar-default ivu-avatar-icon">
@@ -33,7 +30,29 @@
 </template>
 
 <script>
-export default {};
+import menus from "@/data/topmenus";
+export default {
+  name: "cheader",
+  props: ["selected"],
+  data() {
+    return {
+      username: "",
+      defaultMenu: "home",
+      horizontalMnueData: [],
+      dropdata: [{ content: "登出" }]
+    };
+  },
+  created() {
+    this.horizontalMnueData = menus.getMenu(this.selected);
+  },
+  methods: {
+    itemclick(name) {
+      console.log(name);
+      let currentmenu = menus.searchMenuByKey(name);
+      this.$router.push(currentmenu.target);
+    }
+  }
+};
 </script>
 <style lang="less">
 @import "./cheader.less";
