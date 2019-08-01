@@ -1,5 +1,8 @@
 <template>
-  <div>i am list</div>
+  <div>
+    <Button class="spec-btn" type="primary" @click="onAdd()">添加商品</Button>
+    <Divider/>
+  </div>
 </template>
 
 <script>
@@ -9,7 +12,11 @@ export default {
     return {};
   },
   created() {},
-  methods: {}
+  methods: {
+    onAdd(){
+       this.$router.push('/products/products-add');
+    }
+  }
 };
 </script>
 <style lang="less">

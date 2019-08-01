@@ -11,7 +11,6 @@
               <MenuItem :name="item.key" :key="item.key"  v-for="item in horizontalMnueData">
                 <Icon type="md-home"/>{{item.name}}
               </MenuItem>
-              <MenuItem name="5">
                 <span class="ivu-avatar ivu-avatar-circle ivu-avatar-default ivu-avatar-icon">
                   <i class="ivu-icon ivu-icon-ios-person"></i>
                 </span>
@@ -20,7 +19,6 @@
                   <!---->
                   <span>登录</span>
                 </button>
-              </MenuItem>
             </Menu>
           </div>
         </div>

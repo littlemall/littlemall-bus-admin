@@ -5,6 +5,7 @@ const Home = resolve => require(['@/views/Home/Home'], resolve);
 const Products = resolve => require(['@/views/Products/Products'], resolve);
 const ProductsList = resolve => require(['@/views/Products/ProductsList/ProductsList'], resolve);
 const ProductsSpec = resolve => require(['@/views/Products/ProductsSpec/ProductsSpec'], resolve);
+const ProductsAdd = resolve => require(['@/views/Products/ProductsAdd/ProductsAdd'], resolve);
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
           name: "products-list",
           path: "products-list",
           component: ProductsList
+        },
+        {
+          name: "products-add",
+          path: "products-add",
+          component: ProductsAdd
         },
         {
           name: "products-spec",
