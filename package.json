@@ -10,7 +10,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "body-parser": "^1.18.3",
     "connect-history-api-fallback": "^1.6.0",
     "cookie-parser": "^1.4.4",
@@ -20,6 +20,7 @@
     "path": "^0.12.7",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.6",
+    "vue-neditor-wrap-wx": "^1.0.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

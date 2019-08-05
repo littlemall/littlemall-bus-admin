@@ -1,22 +1,12 @@
 <template>
   <div>
-    <Button class="spec-btn" type="primary" @click="onAdd()">添加商品</Button>
-    <Divider/>
+    <router-view v-show="true" keep-alive></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: "product-list",
-  data() {
-    return {};
-  },
-  created() {},
-  methods: {
-    onAdd(){
-       this.$router.push('/products/products-add');
-    }
-  }
+  name: "product-list-wrap",
 };
 </script>
 <style lang="less">

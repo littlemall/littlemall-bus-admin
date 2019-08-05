@@ -2,7 +2,7 @@ const menus = [
     {
         key: 'products-list', // 首页
         name: '商品列表',
-        target: '/products/products-list',
+        target: '/products/products-list/products-list-index',
         selected:true,
     },
     {

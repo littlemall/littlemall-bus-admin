@@ -8,7 +8,7 @@ const menus = [
     {
         key: 'products', // 运营
         name: '商品',
-        target: '/products/products-list',
+        target: '/products/products-list/products-list-index/',
         selected:false,
     },
 ];
