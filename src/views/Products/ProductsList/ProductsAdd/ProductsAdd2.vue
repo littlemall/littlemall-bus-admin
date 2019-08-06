@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-neditor-wrap v-model="content" :config="myConfig" :destroy="false" @ready="ready"></vue-neditor-wrap>
+    <vue-neditor-wrap v-model="content" :config="myConfig" :destroy="false" ></vue-neditor-wrap>
     <Button type="primary">提交</Button>
   </div>
 </template>
@@ -36,9 +36,7 @@ export default {
   components: {
     VueNeditorWrap
   },
-  created() {
-    console.log(VueUeditorWrap);
-  },
+  created() {},
   methods: {}
 };
 </script>

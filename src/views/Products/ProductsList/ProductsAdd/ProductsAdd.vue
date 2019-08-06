@@ -134,7 +134,7 @@
             </FormItem>
           </Col>
         </Row>
-        <Button  type="primary">
+        <Button style="position:fixed; bottom:10px" @click="onNext" type="primary">
                 下一步
                 <Icon type="ios-arrow-forward" />
             </Button>
@@ -146,6 +146,9 @@
 <script>
 import categoryMock from "../../../../mock/mcategory";
 import tagMock from "../../../../mock/mtags";
+import ajax from "../../../../util/ajax"
+import config from  "../../../../config/config"
+import api from "../../../../config/api"
 export default {
   name: "product-add",
   data() {
@@ -180,7 +183,42 @@ export default {
   created() {
     //console.log(categoryMock);
   },
-  methods: {}
+  methods: {
+    onNext(){
+      const url = config.host + api.addGood;
+      let userform = this.userform;
+      ajax.post(url,{
+          name: userform.name,     // 必须
+          category_id:userform.category_id, 
+          promotion:userform.promotion,
+          keyword: userform.keyword,
+          unit : userform.unit,
+          tags: userform.tags,
+          brand_id: userform.brand_id,
+          supplier_id: userform.supplier_id,
+          base_sale: userform.base_sale,
+          base_click: userform.base_click,
+          base_share: userform.base_share,
+          product_code: userform.product_code,
+          starttime: userform.starttime,
+          validity_period : userform.validity_period,
+          inventory: userform.inventory,
+          inventory_warn: userform.inventory_warn,
+          place: userform.place,
+          sku_ids: userform.sku_ids,
+          photo: userform.photo,
+          type_id: userform.type_id,
+      },(res)=>{
+        if(res.data){
+          const {id} = res.data
+          this.$router.push('/products/products-list/products-add2?id=' + id);
+        }
+      },(e)=>{
+        console.log(e);
+      })
+    //  console.log(url);
+    }
+  }
 };
 </script>
 <style lang="less">
