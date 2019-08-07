@@ -4,10 +4,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import iView from 'iview'
+import MQuillEditor from 'vue-m-quill-editor'
+import ajax from "@/util/ajax"
 
 
 Vue.use(iView)
+Vue.use(MQuillEditor)
 Vue.config.productionTip = false
+Vue.prototype.$http = ajax;
 
 new Vue({
   router,

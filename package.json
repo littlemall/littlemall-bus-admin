@@ -20,6 +20,7 @@
     "path": "^0.12.7",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.6",
+    "vue-m-quill-editor": "^1.0.1",
     "vue-neditor-wrap-wx": "^1.0.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

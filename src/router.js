@@ -7,6 +7,7 @@ const ProductsList = resolve => require(['@/views/Products/ProductsList/Products
 const ProductsSpec = resolve => require(['@/views/Products/ProductsSpec/ProductsSpec'], resolve);
 const ProductsAdd = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd'], resolve);
 const ProductsAdd2 = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd2'], resolve);
+const ProductsAdd3 = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd3'], resolve);
 const ProductsListIndex = resolve => require(['@/views/Products/ProductsList/ProductsListIndex/ProductsListIndex'], resolve);
 
 Vue.use(Router)
@@ -44,6 +45,11 @@ export default new Router({
               name: "products-add2",
               path: "products-add2",
               component: ProductsAdd2
+            },
+            {
+              name: "products-add3",
+              path: "products-add3",
+              component: ProductsAdd3
             },
           ]
         },
