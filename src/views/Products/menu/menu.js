@@ -6,11 +6,36 @@ const menus = [
         selected:true,
     },
     {
+        key: 'products-category', // 商品分类
+        name: '商品分类',
+        target: '/products/products-category/products-category-index',
+        selected:false,
+    },
+    {
+        key: 'products-type', // 商品类型
+        name: '商品类型',
+        target: '/products/products-type/products-type-index',
+        selected:false,
+    },
+    {
+        key: 'products-brand', // 商品类型
+        name: '商品品牌',
+        target: '/products/products-brand/products-brand-index',
+        selected:false,
+    },
+    {
+        key: 'products-suppiler', // 商品供应商
+        name: '商品品牌',
+        target: '/products/products-suppiler/products-suppiler-index',
+        selected:false,
+    },
+    {
         key: 'products-spec', // 运营
         name: '商品规格',
         target: '/products/products-spec',
         selected:false,
     },
+
 ];
 
 let getMenu = (key) =>{

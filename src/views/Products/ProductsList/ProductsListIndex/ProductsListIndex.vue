@@ -110,7 +110,27 @@ export default {
       this.$router.push("/products/products-list/products-add");
     },
     show(index) {},
-    remove(index) {},
+    remove(index) {
+      let _this = this;
+      const obj = this.list[index];
+      let id = obj.id;
+      const url = config.host + api.del_good;
+      return _this.$http.post(
+        url,
+        {
+          id,
+        },
+        res => {
+          if(res.code == 200){
+             this.$Message.info('删除成功!');
+            _this.getData()
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
+    },
     onChange(page) {
       this.currentPage = page;
       this.getData();
