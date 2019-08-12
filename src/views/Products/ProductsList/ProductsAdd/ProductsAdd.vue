@@ -144,11 +144,11 @@
 </template>
 
 <script>
-import categoryMock from "../../../../mock/mcategory";
-import tagMock from "../../../../mock/mtags";
-import ajax from "../../../../util/ajax"
-import config from  "../../../../config/config"
-import api from "../../../../config/api"
+import categoryMock from "@/mock/mcategory";
+import tagMock from "@/mock/mtags";
+import ajax from "@/util/ajax"
+import config from  "@/config/config"
+import api from "@/config/api"
 export default {
   name: "product-add",
   data() {
