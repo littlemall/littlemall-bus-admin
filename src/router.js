@@ -14,6 +14,7 @@ const ProductsListIndex = resolve => require(['@/views/Products/ProductsList/Pro
 // category
 const ProductsCategory = resolve => require(['@/views/Products/ProductsCategory/ProductsCategory'], resolve);
 const ProductsCategoryIndex = resolve => require(['@/views/Products/ProductsCategory/ProductsCategoryIndex/ProductsCategoryIndex'], resolve);
+const ProductsCategoryAdd = resolve => require(['@/views/Products/ProductsCategory/ProductsCategoryAdd/ProductsCategoryAdd'], resolve);
 Vue.use(Router)
 
 export default new Router({
@@ -66,7 +67,12 @@ export default new Router({
               name: "products-category-index",
               path: "products-category-index",
               component: ProductsCategoryIndex
-            }
+            },
+            {
+              name: "products-add-category",
+              path: "products-add-category",
+              component: ProductsCategoryAdd
+            },
           ],
         },
         {
