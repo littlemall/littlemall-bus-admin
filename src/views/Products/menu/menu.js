@@ -25,7 +25,7 @@ const menus = [
     },
     {
         key: 'products-suppiler', // 商品供应商
-        name: '商品品牌',
+        name: '商品供应商',
         target: '/products/products-suppiler/products-suppiler-index',
         selected:false,
     },
