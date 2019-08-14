@@ -19,6 +19,11 @@ const ProductsCategoryAdd = resolve => require(['@/views/Products/ProductsCatego
 const ProductsBrand = resolve => require(['@/views/Products/ProductsBrand/ProductsBrand'], resolve);
 const ProductsBrandIndex = resolve => require(['@/views/Products/ProductsBrand/ProductsBrandIndex/ProductsBrandIndex'], resolve);
 const ProductsBrandAdd = resolve => require(['@/views/Products/ProductsBrand/ProductsBrandAdd/ProductsBrandAdd'], resolve);
+// supplier
+const ProductsSupplier = resolve => require(['@/views/Products/ProductsSupplier/ProductsSupplier'], resolve);
+const ProductsSupplierIndex = resolve => require(['@/views/Products/ProductsSupplier/ProductsSupplierIndex/ProductsSupplierIndex'], resolve);
+const ProductsSupplierAdd = resolve => require(['@/views/Products/ProductsSupplier/ProductsSupplierAdd/ProductsSupplierAdd'], resolve);
+
 
 Vue.use(Router)
 
@@ -94,6 +99,23 @@ export default new Router({
               name: "products-add-brand",
               path: "products-add-brand",
               component: ProductsBrandAdd
+            },
+          ],
+        },
+        {
+          name:"products-supplier",
+          path:"products-supplier",
+          component:ProductsSupplier,
+          children:[
+            {
+              name: "products-supplier-index",
+              path: "products-supplier-index",
+              component: ProductsSupplierIndex
+            },
+            {
+              name: "products-add-supplier",
+              path: "products-add-supplier",
+              component: ProductsSupplierAdd
             },
           ],
         },
