@@ -21,7 +21,10 @@
         <Row>
           <Col span="12">
             <FormItem label="是否启用" :label-width="80">
-              <Input v-model="caform.is_uesed" style="width: 380px" placeholder="是否启用" />
+              <i-switch  v-model="switchDefault" size="large" @on-change="change">
+                <span slot="open">开启</span>
+                <span slot="close">关闭</span>
+              </i-switch>
             </FormItem>
           </Col>
         </Row>
@@ -44,31 +47,34 @@ export default {
     return {
       category: categoryMock.data,
       tag: tagMock.data,
+      switchDefault:false,
       caform: {
         name: null,
         sort: null,
-        is_used: null,
+        is_used: 0
       }
     };
   },
   created() {},
   methods: {
+    change(status){
+      this.switchDefault == true? this.caform.is_used  = 1 : this.caform.is_used  = 0
+    },
     onNext() {
       const url = config.host + api.add_type;
       let caform = this.caform;
+      console.log(caform);
       ajax.post(
         url,
         {
           name: caform.name,
-          desc: caform.sort,
-          contact: caform.is_used,
+          sort: caform.sort,
+          is_used: caform.is_used
         },
         res => {
           if (res.data) {
             const { id } = res.data;
-            this.$router.push(
-              "/products/products-type/products-type-index"
-            );
+            this.$router.push("/products/products-type/products-type-index");
           }
         },
         e => {

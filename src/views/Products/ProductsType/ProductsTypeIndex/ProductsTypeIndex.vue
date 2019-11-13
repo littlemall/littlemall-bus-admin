@@ -46,10 +46,6 @@ export default {
           title: "排序值",
           key: "sort"
         },
-        {
-          title: "是否使用",
-          key: "is_used"
-        },
       ],
       list: []
     };
