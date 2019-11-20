@@ -32,7 +32,7 @@
         </Row>
         <Row>
           <Col span="12">
-            <FormItem label="商品关键词" :label-width="80">
+            <FormItem label="关键词" :label-width="80">
               <Input v-model="userform.keyword" style="width: 380px" placeholder="商品关键词" />
             </FormItem>
           </Col>
@@ -67,7 +67,7 @@
             </FormItem>
           </Col>
           <Col span="12">
-           <FormItem label="基础点击数" :label-width="80">
+           <FormItem label="点击数" :label-width="80">
                <Input v-model="userform.base_click" style="width: 380px" placeholder="基础点击数">
                   <span slot="append">次</span>
                </Input>
@@ -77,7 +77,7 @@
         </Row>
         <Row>
           <Col span="12">
-            <FormItem label="基础分享数" :label-width="80">
+            <FormItem label="分享数" :label-width="80">
                <Input v-model="userform.base_share" style="width: 380px" placeholder="基础分享数">
                   <span slot="append">次</span>
                </Input>
@@ -96,7 +96,7 @@
             </FormItem>
           </Col>
           <Col span="12">
-           <FormItem label="保质期天数" :label-width="80">
+           <FormItem label="保质期" :label-width="80">
                <Input v-model="userform.validity_period" style="width: 380px" placeholder="保质期天数">
                   <span slot="append">天</span>
                </Input>
@@ -121,7 +121,7 @@
         </Row>
         <Row>
           <Col span="12">
-            <FormItem label="商品所在地" :label-width="80">
+            <FormItem label="所在地" :label-width="80">
                <Input v-model="userform.place" style="width: 380px" placeholder="商品所在地">
                </Input>
             </FormItem>

@@ -35,7 +35,6 @@ const menus = [
         target: '/products/products-spec',
         selected:false,
     },
-
 ];
 
 let getMenu = (key) =>{
