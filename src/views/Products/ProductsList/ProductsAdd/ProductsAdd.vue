@@ -22,13 +22,13 @@
               <Cascader style="width: 380px" :data="category" v-model="userform.category"></Cascader>
             </FormItem>
           </Col>
-          <Col span="12">
+          <!-- <Col span="12">
             <FormItem label="商品标签" :label-width="80">
               <Select v-model="userform.tag" multiple style="width:380px">
                 <Option v-for="item in tag" :value="item.value" :key="item.value">{{ item.label }}</Option>
               </Select>
             </FormItem>
-          </Col>
+          </Col> -->
         </Row>
         <Row>
           <Col span="12">
@@ -46,14 +46,14 @@
           <Col span="12">
             <FormItem label="商品品牌" :label-width="80">
               <Select v-model="userform.brand_id" multiple style="width:380px">
-                <Option v-for="item in tag" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                <Option v-for="item in brand" :value="item.id" :key="item.id">{{ item.name }}</Option>
               </Select>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="供货商" :label-width="80">
               <Select v-model="userform.supplier_id" multiple style="width:380px">
-                <Option v-for="item in tag" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                <Option v-for="item in supplyer" :value="item.id" :key="item.id">{{ item.name }}</Option>
               </Select>
             </FormItem>
           </Col>
@@ -128,8 +128,8 @@
           </Col>
           <Col span="12">
              <FormItem label="商品类型" :label-width="80">
-              <Select v-model="userform.tag" multiple style="width:380px">
-                <Option v-for="item in tag" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              <Select v-model="userform.tag" style="width:380px">
+                <Option v-for="item in tag" :value="item.id" :key="item.id">{{ item.name }}</Option>
               </Select>
             </FormItem>
           </Col>
@@ -177,13 +177,99 @@ export default {
         detail: null // 商品详情信息
       },
       category: categoryMock.data,
-      tag: tagMock.data
+      tag: tagMock.data,
+      brand:[],
+      supplyer:[],
     };
   },
   created() {
     //console.log(categoryMock);
+
+    //获取商品标签接口
+    this.getGoodsType()
+    // 获取商品树形分类接口
+    this.getGoodsCategoryTree()
+    // 获取商品品牌接口
+    this.getGoodsBrand()
+    // 获取供货商接口
+    this.getGoodsSupplyer()
+
+
   },
   methods: {
+    getGoodsSupplyer(){
+      let _this = this;
+      const url = config.host + api.query_supplier_list;
+         return _this.$http.get(
+        url,
+        {
+          page: 1,
+          size: 20
+        },
+        res => {
+          if (res.data) {
+            _this.supplyer = res.data.rows;
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
+    },
+    getGoodsBrand(){
+      let _this = this;
+      const url = config.host + api.query_brand_list;
+         return _this.$http.get(
+        url,
+        {
+          page: 1,
+          size: 20
+        },
+        res => {
+          if (res.data) {
+            _this.brand = res.data.rows;
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
+    },
+    getGoodsCategoryTree(){
+      let _this = this;
+      const url = config.host + api.query_category_tree;
+         return _this.$http.get(
+        url,
+        {},
+        res => {
+          if (res.data) {
+            _this.category = res.data;
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
+    },
+    getGoodsType(){
+      let _this = this;
+      const url = config.host + api.query_type_list;
+         return _this.$http.get(
+        url,
+        {
+          page: 1,
+          size: 20
+        },
+        res => {
+          if (res.data) {
+            _this.tag = res.data.rows;
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
+    },
     onNext(){
       const url = config.host + api.addGood;
       let userform = this.userform;
@@ -208,6 +294,7 @@ export default {
           sku_ids: userform.sku_ids,
           photo: userform.photo,
           type_id: userform.type_id,
+          status:0,
       },(res)=>{
         if(res.data){
           const {id} = res.data
