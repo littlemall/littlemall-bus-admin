@@ -298,7 +298,7 @@ export default {
       },(res)=>{
         if(res.data){
           const {id} = res.data
-          this.$router.push('/products/products-list/products-add2?id=' + id);
+          this.$router.push('/products/products-list/products-addpic?id=' + id);
         }
       },(e)=>{
         console.log(e);

@@ -11,6 +11,8 @@ const ProductsAdd = resolve => require(['@/views/Products/ProductsList/ProductsA
 const ProductsAdd2 = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd2'], resolve);
 const ProductsAdd3 = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd3'], resolve);
 const ProductsListIndex = resolve => require(['@/views/Products/ProductsList/ProductsListIndex/ProductsListIndex'], resolve);
+const ProductsAddPic = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAddPic'], resolve);
+
 // category
 const ProductsCategory = resolve => require(['@/views/Products/ProductsCategory/ProductsCategory'], resolve);
 const ProductsCategoryIndex = resolve => require(['@/views/Products/ProductsCategory/ProductsCategoryIndex/ProductsCategoryIndex'], resolve);
@@ -27,6 +29,7 @@ const ProductsSupplierAdd = resolve => require(['@/views/Products/ProductsSuppli
 const ProductsType = resolve => require(['@/views/Products/ProductsType/ProductsType'], resolve);
 const ProductsTypeIndex = resolve => require(['@/views/Products/ProductsType/ProductsTypeIndex/ProductsTypeIndex'], resolve);
 const ProductsTypeAdd = resolve => require(['@/views/Products/ProductsType/ProductsTypeAdd/ProductsTypeAdd'], resolve);
+
 
 
 Vue.use(Router)
@@ -70,6 +73,11 @@ export default new Router({
               path: "products-add3",
               component: ProductsAdd3
             },
+            {
+              name:"products-addpic",
+              path:"products-addpic",
+              component:ProductsAddPic
+            }
           ]
         },
         {
