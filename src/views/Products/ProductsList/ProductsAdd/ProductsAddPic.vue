@@ -48,13 +48,16 @@
       />
     </Modal>
     <div>
-      <Button type="primary"  @click="onNext">下一步</Button>
+      <Button type="primary" @click="onNext">下一步</Button>
     </div>
   </div>
 </template>
 
 <script>
 import VueNeditorWrap from "vue-neditor-wrap-wx";
+import ajax from "@/util/ajax";
+import config from "@/config/config";
+import api from "@/config/api";
 
 export default {
   name: "product-add-pic",
@@ -63,11 +66,14 @@ export default {
       defaultList: [],
       imgName: "",
       visible: false,
-      uploadList: []
+      uploadList: [],
+      goodId: ""
     };
   },
   components: {},
-  created() {},
+  created() {
+    this.goodId = this.$route.query.id;
+  },
   methods: {
     handleView(name) {
       this.imgName = name;
@@ -78,7 +84,6 @@ export default {
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },
     handleSuccess(res, file) {
-      console.log(res);
       file.url = "http://10.18.120.228:7001" + res.data.path;
       //   file.url =
       //     "https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar";
@@ -108,17 +113,33 @@ export default {
       }
       return check;
     },
-    onNext(){
-        let pushArr=[]
-        for(let item of this.uploadList){
-            pushArr.push({
-                name:item.name,
-                size:item.size,
-                url:item.url
-            })
-        } 
-        let pushStr = JSON.stringify(pushArr);
-        console.log(pushStr)
+    onNext() {
+      let pushArr = [];
+      let _this = this;
+      for (let item of this.uploadList) {
+        pushArr.push({
+          name: item.name,
+          size: item.size,
+          url: item.url
+        });
+      }
+      let pushStr = JSON.stringify(pushArr);
+      const url = config.host + api.update_goods_pic;
+      ajax.post(
+        url,
+        {
+          id: this.goodId,
+          photos:pushStr
+        },
+        res => {
+          if (res.data) {
+           this.$router.push('/products/products-list/products-add2?id=' + this.goodId);
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
     }
   },
   mounted() {

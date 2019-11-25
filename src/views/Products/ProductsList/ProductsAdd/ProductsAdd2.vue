@@ -1,12 +1,15 @@
 <template>
   <div>
     <vue-neditor-wrap v-model="content" :config="myConfig" :destroy="false" ></vue-neditor-wrap>
-    <Button type="primary">提交</Button>
+    <Button type="primary" @click="onUpdate">提交</Button>
   </div>
 </template>
 
 <script>
 import VueNeditorWrap from "vue-neditor-wrap-wx";
+import ajax from "@/util/ajax";
+import config from "@/config/config";
+import api from "@/config/api";
 
 export default {
   name: "product-add2",
@@ -30,14 +33,37 @@ export default {
         // 关闭自动保存
         enableAutoSave: false
       },
-      content: ""
+      content: "",
+      goodId:"",
     };
   },
   components: {
     VueNeditorWrap
   },
-  created() {},
-  methods: {}
+  created() {
+      this.goodId = this.$route.query.id;
+  },
+  methods: {
+    onUpdate(){
+      const url = config.host + api.update_good;
+      ajax.post(
+        url,
+        {
+          id: this.goodId,
+          detail:this.content
+        },
+        res => {
+          if (res.data) {
+          //  this.$router.push('/products/products-list/products-add2?id=' + this.goodId);
+          this.$router.push('/products/products-list/products-list-index');
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
+    }
+  }
 };
 </script>
 <style lang="less">

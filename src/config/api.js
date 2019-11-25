@@ -3,6 +3,8 @@ export default {
     "query_good":"/goods/admin/query_good",           //根据ID查询商品
     "del_good":"/goods/admin/del_good",               //删除商品
     "query_good_list":"/goods/admin/query_good_list",   //查询商品列表，支持分页
+    "update_goods_pic":"/goods/admin/update_goods_pic", // 更新商品图片数据
+    "update_good":"/goods/admin/update_good", //更新商品信息接口
 
     "query_good_category_list":"/goods/admin/query_category_list", //查询商品分类列表数据信息
     "query_category_tree":"/goods/admin/query_category_tree", //查询分类树形结构接口
