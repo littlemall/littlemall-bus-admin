@@ -32,7 +32,7 @@
         <swiper ref="awesomeSwiperA" :options="swiperOptionA" @set-translate="onSetTranslate">
           <!-- slides -->
             <swiper-slide :key="item.name" v-for="item of currentDetail.imgs">
-              <div style="width:280;height:280px">
+              <div style="width:280px;height:280px">
                 <img width="100%" height="100%" :src="item.url"/>
               </div>
             </swiper-slide>
@@ -159,7 +159,10 @@ export default {
     onAdd() {
       this.$router.push("/products/products-list/products-add");
     },
-    edit(index) {},
+    edit(index) {
+      const itemId = this.list[index].id
+       this.$router.push("/products/products-list/products-add?id="+itemId);
+    },
     show(index) {
       this.currentDetail = this.list[index]
       this.currentDetail["imgs"] = JSON.parse(this.currentDetail.photo)
