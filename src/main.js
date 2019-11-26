@@ -6,12 +6,17 @@ import store from './store'
 import iView from 'view-design'
 import MQuillEditor from 'vue-m-quill-editor'
 import ajax from "@/util/ajax"
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+ 
+// require styles
+import 'swiper/dist/css/swiper.css'
 
 
 Vue.use(iView)
 Vue.use(MQuillEditor)
 Vue.config.productionTip = false
 Vue.prototype.$http = ajax;
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
 
 new Vue({
   router,

@@ -5,10 +5,16 @@
     <div class="goods-table">
       <Table border :columns="columns" :data="list">
         <template slot-scope="{ row }" slot="name">
-          <strong>{{ row.name }}</strong>
+          <div alt="row.name" src="javascript:void(0)" class="t-title">{{ row.name }}</div>
+        </template>
+        <template slot-scope="{ row }" slot="photo">
+          <div>
+            <img :src="row.pimg" />
+          </div>
         </template>
         <template slot-scope="{ row, index }" slot="action">
           <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">查看</Button>
+          <Button type="primary" size="small" style="margin-right: 5px" @click="edit(index)">编辑</Button>
           <Button type="error" size="small" @click="remove(index)">删除</Button>
         </template>
       </Table>
@@ -21,39 +27,69 @@
         @on-change="onChange"
       />
     </div>
+    <div class="goods-detail">
+      <Modal v-model="detailModal" title="商品详情" @on-ok="ok">
+        <swiper ref="awesomeSwiperA" :options="swiperOptionA" @set-translate="onSetTranslate">
+          <!-- slides -->
+            <swiper-slide :key="item.name" v-for="item of currentDetail.imgs">
+              <div style="width:280;height:280px">
+                <img width="100%" height="100%" :src="item.url"/>
+              </div>
+            </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        <div class="good-name-title">{{currentDetail.name}}</div>
+        <div class="good-subname">{{currentDetail.keyword}}</div>
+        <div class="good-inventory"><strong>库存：</strong>{{currentDetail.inventory}}</div>
+      </Modal>
+    </div>
   </div>
 </template>
 
 <script>
 import config from "@/config/config";
 import api from "@/config/api";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 export default {
   name: "product-list-index",
   data() {
     return {
+      message: "Hi from Vue",
+      swiperOptionA: {
+        pagination: {
+          el: ".swiper-pagination"
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      },
+      currentDetail:{
+        photos:[],
+        name:'',
+        keyword:'',
+        inventory:0,
+      },
+      detailModal: false,
       dataTotal: 0, //页总数
       currentPage: 1,
       numsPerPage: 10,
       columns: [
         {
           title: "商品名称",
-          key: "name"
+          slot: "name"
         },
         {
           title: "商品分类",
           key: "category_id"
         },
         {
-          title: "商品推荐语",
-          key: "promotion"
+          title: "商品图片",
+          slot: "photo"
         },
         {
           title: "商品关键词",
           key: "keyword"
-        },
-        {
-          title: "商品标签",
-          key: "tags"
         },
         {
           title: "商品品牌",
@@ -74,7 +110,7 @@ export default {
         {
           title: "操作",
           slot: "action",
-          width: 150,
+          width: 200,
           align: "center"
         }
       ],
@@ -85,6 +121,20 @@ export default {
     this.getData();
   },
   methods: {
+    onSetTranslate() {
+      console.log("onSetTranslate");
+    },
+    ok() {
+      this.$Message.info("Clicked ok");
+    },
+    formateList(arr) {
+      for (let item of arr) {
+        if (item.photo && item.photo != "") {
+          item["pimg"] = JSON.parse(item.photo)[0].url;
+        }
+      }
+      return arr;
+    },
     getData() {
       let _this = this;
       const url = config.host + api.query_good_list;
@@ -95,9 +145,9 @@ export default {
           size: _this.numsPerPage
         },
         res => {
-          console.log(res.data);
           if (res.data) {
-            _this.list = res.data.rows;
+            _this.list = _this.formateList(res.data.rows);
+            console.log(_this.list);
             _this.dataTotal = res.data.count;
           }
         },
@@ -109,7 +159,13 @@ export default {
     onAdd() {
       this.$router.push("/products/products-list/products-add");
     },
-    show(index) {},
+    edit(index) {},
+    show(index) {
+      this.currentDetail = this.list[index]
+      this.currentDetail["imgs"] = JSON.parse(this.currentDetail.photo)
+      console.log( this.currentDetail)
+      this.detailModal = true;
+    },
     remove(index) {
       let _this = this;
       const obj = this.list[index];
@@ -118,12 +174,12 @@ export default {
       return _this.$http.post(
         url,
         {
-          id,
+          id
         },
         res => {
-          if(res.code == 200){
-             this.$Message.info('删除成功!');
-            _this.getData()
+          if (res.code == 200) {
+            this.$Message.info("删除成功!");
+            _this.getData();
           }
         },
         e => {
@@ -139,7 +195,48 @@ export default {
 };
 </script>
 <style lang="less">
+
 .goods-table {
   margin-top: 20px;
+}
+.t-title {
+  width: 200;
+  display: -webkit-box; /*必须结合的属性,将对象作为弹性伸缩盒子模型显示*/
+  -webkit-line-clamp: 2; /*设置多少行*/
+  -webkit-box-orient: vertical; /*必须结合的属性,设置或检索伸缩盒对象的子元素的排列方式*/
+  overflow: hidden; /*文本会被修剪，并且剩余的部分不可见*/
+  text-overflow: ellipsis; /*显示省略号来代表被修剪的文本*/
+}
+.swiper-container {
+  height: 300px;
+  width: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 38px;
+  font-weight: 700;
+  background-color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.good-name-title, .good-inventory{
+  font-size: 14px;
+  color: #333;
+  margin-top: 11px;
+}
+
+.good-subname{
+   font-size: 12px;
+  color: #999;
+  margin-top: 6px;
 }
 </style>
