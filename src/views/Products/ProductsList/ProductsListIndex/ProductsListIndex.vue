@@ -9,7 +9,7 @@
         </template>
         <template slot-scope="{ row }" slot="photo">
           <div>
-            <img :src="row.pimg" />
+            <img :src="row.pimg" width="100px" style="margin:10px 0 0 0"  />
           </div>
         </template>
         <template slot-scope="{ row, index }" slot="action">
@@ -41,6 +41,11 @@
         <div class="good-name-title">{{currentDetail.name}}</div>
         <div class="good-subname">{{currentDetail.keyword}}</div>
         <div class="good-inventory"><strong>库存：</strong>{{currentDetail.inventory}}</div>
+        <div v-if="currentDetail.good_goodsskus != null" class="good-market-price"><strong>市场价: </strong>{{currentDetail.good_goodsskus[0].market_price}}</div> 
+        <div v-if="currentDetail.good_goodsskus != null" class="good-price"><strong>商品价: </strong>{{currentDetail.good_goodsskus[0].price}}</div>
+        <div v-if="currentDetail.good_goodsskus != null" class="good-code"><strong>商品SKU: </strong>{{currentDetail.good_goodsskus[0].code}}</div>
+        <div v-if="currentDetail.good_goodsskus != null" class="good-attr"><strong>商品规格: </strong>{{currentDetail.good_goodsskus[0].attr_values_items}}</div>
+         <div v-if="currentDetail.detail != null" v-html="currentDetail.detail" class="good-detail">{{currentDetail.detail}}</div>
       </Modal>
     </div>
   </div>
@@ -166,7 +171,6 @@ export default {
     show(index) {
       this.currentDetail = this.list[index]
       this.currentDetail["imgs"] = JSON.parse(this.currentDetail.photo)
-      console.log( this.currentDetail)
       this.detailModal = true;
     },
     remove(index) {
@@ -241,5 +245,12 @@ export default {
    font-size: 12px;
   color: #999;
   margin-top: 6px;
+}
+
+.good-detail{
+  width: 100%;
+}
+.good-detail img{
+  width:100% !important
 }
 </style>
