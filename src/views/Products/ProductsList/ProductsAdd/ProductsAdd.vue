@@ -381,6 +381,7 @@ export default {
         // 编辑页面
         const url = config.host + api.update_good;
         let userform = this.userform;
+        this.userform.category_id = this.userform.category.join(',');
         ajax.post(
           url,
           {
@@ -424,6 +425,7 @@ export default {
         // 新增页面
         const url = config.host + api.addGood;
         let userform = this.userform;
+        this.userform.category_id = this.userform.category.join(',');
         ajax.post(
           url,
           {
