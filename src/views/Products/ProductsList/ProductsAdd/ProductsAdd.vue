@@ -188,12 +188,12 @@
 </template>
 
 <script>
-import categoryMock from "@/mock/mcategory";
 import tagMock from "@/mock/mtags";
 import ajax from "@/util/ajax";
 import config from "@/config/config";
 import api from "@/config/api";
-const uuidv4 = require('uuid/v4');
+import { parse } from 'path';
+const uuidv4 = require("uuid/v4");
 
 export default {
   name: "product-add",
@@ -204,6 +204,7 @@ export default {
         id: "",
         name: "", // 商品名称
         promotion: "", //商品推荐语
+        category:[],
         category_id: null, // 商品分类id
         keyword: null, // 商品关键词
         unit: null, // 商品单元
@@ -230,7 +231,7 @@ export default {
         sku_price: null,
         sku_stock: null
       },
-      category: categoryMock.data,
+      category: [],
       tag: tagMock.data,
       brand: [],
       supplyer: []
@@ -240,7 +241,14 @@ export default {
     // 获取商品ID
     this.goodId = this.$route.query.id;
     this.userform.sku_code = uuidv4();
-    console.log(this.userform.sku_code);
+      //获取商品标签接口
+    this.getGoodsType();
+    // 获取商品树形分类接口
+    this.getGoodsCategoryTree();
+    // 获取商品品牌接口
+    this.getGoodsBrand();
+    // 获取供货商接口
+    this.getGoodsSupplyer();
     if (this.goodId) {
       // 编辑页面
       // 获取商品数据
@@ -254,11 +262,17 @@ export default {
         res => {
           if (res.data) {
             let goodDetail = res.data[0];
-            console.log(goodDetail)
+            let categoryItem = [];
+            if (goodDetail.category_id) {
+              categoryItem = goodDetail.category_id.split(",");
+            }
+            for(let i =0; i<categoryItem.length; i++){
+              categoryItem[i] = parseInt(categoryItem[i]);
+            }
             _this.userform.name = goodDetail.name;
             _this.userform.id = goodDetail.id;
             _this.userform.promotion = goodDetail.promotion;
-            _this.userform.category_id = goodDetail.category_id;
+            _this.userform.category = categoryItem;
             _this.userform.keyword = goodDetail.keyword;
             _this.userform.unit = goodDetail.unit;
             _this.userform.tags = goodDetail.tags;
@@ -279,8 +293,10 @@ export default {
             _this.userform.detail = goodDetail.detail;
             _this.userform.sku_code = goodDetail.good_goodsskus[0].code;
             _this.userform.sku_name = goodDetail.good_goodsskus[0].name;
-            _this.userform.sku_attr = goodDetail.good_goodsskus[0].attr_values_items;
-            _this.userform.sku_market_price = goodDetail.good_goodsskus[0].market_price;
+            _this.userform.sku_attr =
+              goodDetail.good_goodsskus[0].attr_values_items;
+            _this.userform.sku_market_price =
+              goodDetail.good_goodsskus[0].market_price;
             _this.userform.sku_price = goodDetail.good_goodsskus[0].price;
             _this.userform.sku_stock = goodDetail.good_goodsskus[0].stock;
             // _this.supplyer = res.data.rows;
@@ -293,14 +309,7 @@ export default {
     } else {
       //新增商品页面
     }
-    //获取商品标签接口
-    this.getGoodsType();
-    // 获取商品树形分类接口
-    this.getGoodsCategoryTree();
-    // 获取商品品牌接口
-    this.getGoodsBrand();
-    // 获取供货商接口
-    this.getGoodsSupplyer();
+  
   },
   methods: {
     getGoodsSupplyer() {
@@ -381,7 +390,7 @@ export default {
         // 编辑页面
         const url = config.host + api.update_good;
         let userform = this.userform;
-        this.userform.category_id = this.userform.category.join(',');
+        this.userform.category_id = this.userform.category.join(",");
         ajax.post(
           url,
           {
@@ -425,7 +434,7 @@ export default {
         // 新增页面
         const url = config.host + api.addGood;
         let userform = this.userform;
-        this.userform.category_id = this.userform.category.join(',');
+        this.userform.category_id = this.userform.category.join(",");
         ajax.post(
           url,
           {

@@ -7,9 +7,15 @@
         <template slot-scope="{ row }" slot="name">
           <div alt="row.name" src="javascript:void(0)" class="t-title">{{ row.name }}</div>
         </template>
+        <template slot-scope="{ row }" slot="brand">
+          <div>{{row.good_goodsbrand.name}}</div>
+        </template>
+        <template slot-scope="{ row }" slot="supplier">
+          <div>{{row.good_goodssupplier.name}}</div>
+        </template>
         <template slot-scope="{ row }" slot="photo">
           <div>
-            <img :src="row.pimg" width="100px" style="margin:10px 0 0 0"  />
+            <img :src="row.pimg" width="100px" style="margin:10px 0 0 0" />
           </div>
         </template>
         <template slot-scope="{ row, index }" slot="action">
@@ -31,21 +37,40 @@
       <Modal v-model="detailModal" title="商品详情" @on-ok="ok">
         <swiper ref="awesomeSwiperA" :options="swiperOptionA" @set-translate="onSetTranslate">
           <!-- slides -->
-            <swiper-slide :key="item.name" v-for="item of currentDetail.imgs">
-              <div style="width:280px;height:280px">
-                <img width="100%" height="100%" :src="item.url"/>
-              </div>
-            </swiper-slide>
+          <swiper-slide :key="item.name" v-for="item of currentDetail.imgs">
+            <div style="width:280px;height:280px">
+              <img width="100%" height="100%" :src="item.url" />
+            </div>
+          </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
         <div class="good-name-title">{{currentDetail.name}}</div>
         <div class="good-subname">{{currentDetail.keyword}}</div>
-        <div class="good-inventory"><strong>库存：</strong>{{currentDetail.inventory}}</div>
-        <div v-if="currentDetail.good_goodsskus != null" class="good-market-price"><strong>市场价: </strong>{{currentDetail.good_goodsskus[0].market_price}}</div> 
-        <div v-if="currentDetail.good_goodsskus != null" class="good-price"><strong>商品价: </strong>{{currentDetail.good_goodsskus[0].price}}</div>
-        <div v-if="currentDetail.good_goodsskus != null" class="good-code"><strong>商品SKU: </strong>{{currentDetail.good_goodsskus[0].code}}</div>
-        <div v-if="currentDetail.good_goodsskus != null" class="good-attr"><strong>商品规格: </strong>{{currentDetail.good_goodsskus[0].attr_values_items}}</div>
-         <div v-if="currentDetail.detail != null" v-html="currentDetail.detail" class="good-detail">{{currentDetail.detail}}</div>
+        <div class="good-inventory">
+          <strong>库存：</strong>
+          {{currentDetail.inventory}}
+        </div>
+        <div v-if="currentDetail.good_goodsskus != null" class="good-market-price">
+          <strong>市场价:</strong>
+          {{currentDetail.good_goodsskus[0].market_price}}
+        </div>
+        <div v-if="currentDetail.good_goodsskus != null" class="good-price">
+          <strong>商品价:</strong>
+          {{currentDetail.good_goodsskus[0].price}}
+        </div>
+        <div v-if="currentDetail.good_goodsskus != null" class="good-code">
+          <strong>商品SKU:</strong>
+          {{currentDetail.good_goodsskus[0].code}}
+        </div>
+        <div v-if="currentDetail.good_goodsskus != null" class="good-attr">
+          <strong>商品规格:</strong>
+          {{currentDetail.good_goodsskus[0].attr_values_items}}
+        </div>
+        <div
+          v-if="currentDetail.detail != null"
+          v-html="currentDetail.detail"
+          class="good-detail"
+        >{{currentDetail.detail}}</div>
       </Modal>
     </div>
   </div>
@@ -69,11 +94,11 @@ export default {
           prevEl: ".swiper-button-prev"
         }
       },
-      currentDetail:{
-        photos:[],
-        name:'',
-        keyword:'',
-        inventory:0,
+      currentDetail: {
+        photos: [],
+        name: "",
+        keyword: "",
+        inventory: 0
       },
       detailModal: false,
       dataTotal: 0, //页总数
@@ -98,11 +123,12 @@ export default {
         },
         {
           title: "商品品牌",
-          key: "brand_id"
+          slot: "brand"
         },
         {
           title: "商品供应商",
-          key: "supplier_id"
+          // key: "supplier_id"
+          slot: "supplier"
         },
         {
           title: "商品库存",
@@ -165,12 +191,12 @@ export default {
       this.$router.push("/products/products-list/products-add");
     },
     edit(index) {
-      const itemId = this.list[index].id
-       this.$router.push("/products/products-list/products-add?id="+itemId);
+      const itemId = this.list[index].id;
+      this.$router.push("/products/products-list/products-add?id=" + itemId);
     },
     show(index) {
-      this.currentDetail = this.list[index]
-      this.currentDetail["imgs"] = JSON.parse(this.currentDetail.photo)
+      this.currentDetail = this.list[index];
+      this.currentDetail["imgs"] = JSON.parse(this.currentDetail.photo);
       this.detailModal = true;
     },
     remove(index) {
@@ -202,7 +228,6 @@ export default {
 };
 </script>
 <style lang="less">
-
 .goods-table {
   margin-top: 20px;
 }
@@ -235,22 +260,23 @@ export default {
   align-items: center;
 }
 
-.good-name-title, .good-inventory{
+.good-name-title,
+.good-inventory {
   font-size: 14px;
   color: #333;
   margin-top: 11px;
 }
 
-.good-subname{
-   font-size: 12px;
+.good-subname {
+  font-size: 12px;
   color: #999;
   margin-top: 6px;
 }
 
-.good-detail{
+.good-detail {
   width: 100%;
 }
-.good-detail img{
-  width:100% !important
+.good-detail img {
+  width: 100% !important;
 }
 </style>
