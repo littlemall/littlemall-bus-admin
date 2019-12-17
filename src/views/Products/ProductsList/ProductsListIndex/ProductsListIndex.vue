@@ -7,6 +7,9 @@
         <template slot-scope="{ row }" slot="name">
           <div alt="row.name" src="javascript:void(0)" class="t-title">{{ row.name }}</div>
         </template>
+        <template slot-scope="{ row }" slot="category">
+          <div> {{formatCategory(row.category_id)}}</div>
+        </template>
         <template slot-scope="{ row }" slot="brand">
           <div>{{row.good_goodsbrand.name}}</div>
         </template>
@@ -111,7 +114,7 @@ export default {
         },
         {
           title: "商品分类",
-          key: "category_id"
+          slot: "category"
         },
         {
           title: "商品图片",
@@ -145,18 +148,20 @@ export default {
           align: "center"
         }
       ],
-      list: []
+      list: [],
+      categorys: []
     };
   },
   created() {
+    this.getCategoryList();
     this.getData();
   },
   methods: {
     onSetTranslate() {
-      console.log("onSetTranslate");
+    //  console.log("onSetTranslate");
     },
     ok() {
-      this.$Message.info("Clicked ok");
+     // this.$Message.info("Clicked ok");
     },
     formateList(arr) {
       for (let item of arr) {
@@ -165,6 +170,45 @@ export default {
         }
       }
       return arr;
+    },
+    formatCategory(categoryIds){
+      let arr = categoryIds.split(',');
+      let narr = [];
+      for(let item of arr){
+          let res  = this.getCategoryById(parseInt(item));
+          narr.push(res.name);
+      }
+      return narr.join(',');
+    },
+    getCategoryById(id){
+      console.log(id);
+      let result;
+      for(let i = 0 ; i< this.categorys.length; i++){
+        if(id === this.categorys[i].id){
+          result = this.categorys[i]
+        }
+      }
+      return result;
+    },
+    getCategoryList() {
+      let _this = this;
+      const url = config.host + api.query_good_category_list;
+      return _this.$http.get(
+        url,
+        {
+          page: 1,
+          size: 500
+        },
+        res => {
+          console.log(res.data);
+          if (res.data) {
+            _this.categorys = res.data.rows;
+          }
+        },
+        e => {
+          console.log(e);
+        }
+      );
     },
     getData() {
       let _this = this;
