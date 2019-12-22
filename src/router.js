@@ -3,6 +3,7 @@ import Router from 'vue-router'
 const Login = resolve => require(['@/views/Login/Login'], resolve)
 const Home = resolve => require(['@/views/Home/Home'], resolve)
 const Products = resolve => require(['@/views/Products/Products'], resolve)
+const Sessions = resolve => require(['@/views/Sessions/Sessions'], resolve)
 
 // product
 const ProductsList = resolve => require(['@/views/Products/ProductsList/ProductsList'], resolve)
@@ -30,6 +31,10 @@ const ProductsType = resolve => require(['@/views/Products/ProductsType/Products
 const ProductsTypeIndex = resolve => require(['@/views/Products/ProductsType/ProductsTypeIndex/ProductsTypeIndex'], resolve)
 const ProductsTypeAdd = resolve => require(['@/views/Products/ProductsType/ProductsTypeAdd/ProductsTypeAdd'], resolve)
 
+// session
+const SessionsList = resolve => require(['@/views/Sessions/SessionsList/SessionsList'], resolve)
+const SessionsListIndex = resolve => require(['@/views/Sessions/SessionsList/SessionsListIndex/SessionsListIndex'], resolve)
+
 Vue.use(Router)
 
 export default new Router({
@@ -40,6 +45,25 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/sessions',
+      name: 'Sessions',
+      component: Sessions,
+      children: [
+        {
+          name: 'sessions-list',
+          path: 'sessions-list',
+          component: SessionsList,
+          children: [
+            {
+              name: 'sessions-list-index',
+              path: 'sessions-list-index',
+              component: SessionsListIndex
+            }
+          ]
+        }
+      ]
     },
     {
       path: '/products',

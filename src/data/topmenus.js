@@ -10,6 +10,12 @@ const menus = [
     name: '商品',
     target: '/products/products-list/products-list-index/',
     selected: false
+  },
+  {
+    key: 'sessions', // 营销
+    name: '营销',
+    target: '/sessions/sessions-list/sessions-list-index/',
+    selected: false
   }
 ]
 
