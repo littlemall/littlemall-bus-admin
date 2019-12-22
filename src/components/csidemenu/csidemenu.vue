@@ -11,26 +11,26 @@
 
 <script>
 export default {
-  name: "cheader",
-  props: ["selected","opens","name","title","sidemenu"],
-  data() {
+  name: 'cheader',
+  props: ['selected', 'opens', 'name', 'title', 'sidemenu'],
+  data () {
     return {
-      username: "",
-      defaultMenu: "home",
-      dropdata: [{ content: "登出" }]
-    };
+      username: '',
+      defaultMenu: 'home',
+      dropdata: [{ content: '登出' }]
+    }
   },
-  created() {
-    this.horizontalMnueData = this.sidemenu.getMenu(this.selected);
+  created () {
+    this.horizontalMnueData = this.sidemenu.getMenu(this.selected)
   },
   methods: {
-    itemclick(name) {
-      console.log(name);
-      let currentmenu = this.sidemenu.searchMenuByKey(name);
-      this.$router.push(currentmenu.target);
+    itemclick (name) {
+      console.log(name)
+      let currentmenu = this.sidemenu.searchMenuByKey(name)
+      this.$router.push(currentmenu.target)
     }
   }
-};
+}
 </script>
 <style lang="less">
 </style>

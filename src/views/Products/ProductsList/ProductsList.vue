@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  name: "product-list-wrap",
-};
+  name: 'product-list-wrap'
+}
 </script>
 <style lang="less">
 </style>

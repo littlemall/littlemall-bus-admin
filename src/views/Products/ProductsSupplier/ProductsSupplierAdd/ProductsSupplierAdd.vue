@@ -47,14 +47,14 @@
 </template>
 
 <script>
-import categoryMock from "@/mock/mcategory";
-import tagMock from "@/mock/mtags";
-import ajax from "@/util/ajax";
-import config from "@/config/config";
-import api from "@/config/api";
+import categoryMock from '@/mock/mcategory'
+import tagMock from '@/mock/mtags'
+import ajax from '@/util/ajax'
+import config from '@/config/config'
+import api from '@/config/api'
 export default {
-  name: "product-add",
-  data() {
+  name: 'product-add',
+  data () {
     return {
       category: categoryMock.data,
       tag: tagMock.data,
@@ -65,13 +65,13 @@ export default {
         phone: null,
         address: null
       }
-    };
+    }
   },
-  created() {},
+  created () {},
   methods: {
-    onNext() {
-      const url = config.host + api.add_good_supplier;
-      let caform = this.caform;
+    onNext () {
+      const url = config.host + api.add_good_supplier
+      let caform = this.caform
       ajax.post(
         url,
         {
@@ -79,22 +79,21 @@ export default {
           desc: caform.desc,
           contact: caform.contact,
           phone: caform.phone,
-          address: caform.address,
+          address: caform.address
         },
         res => {
           if (res.data) {
-            const { id } = res.data;
-            this.$router.push("/products/products-supplier/products-supplier-index");
+            this.$router.push('/products/products-supplier/products-supplier-index')
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
       //  console.log(url);
     }
   }
-};
+}
 </script>
 <style lang="less">
 .form-warp {

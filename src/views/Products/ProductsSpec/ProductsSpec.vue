@@ -12,63 +12,63 @@
 
 <script>
 export default {
-  name: "product-spec",
-  data() {
+  name: 'product-spec',
+  data () {
     return {
       columns4: [
         {
-          type: "selection",
+          type: 'selection',
           width: 60,
-          align: "center"
+          align: 'center'
         },
         {
-          title: "Name",
-          key: "name"
+          title: 'Name',
+          key: 'name'
         },
         {
-          title: "Age",
-          key: "age"
+          title: 'Age',
+          key: 'age'
         },
         {
-          title: "Address",
-          key: "address"
+          title: 'Address',
+          key: 'address'
         }
       ],
       data1: [
         {
-          name: "John Brown",
+          name: 'John Brown',
           age: 18,
-          address: "New York No. 1 Lake Park",
-          date: "2016-10-03"
+          address: 'New York No. 1 Lake Park',
+          date: '2016-10-03'
         },
         {
-          name: "Jim Green",
+          name: 'Jim Green',
           age: 24,
-          address: "London No. 1 Lake Park",
-          date: "2016-10-01"
+          address: 'London No. 1 Lake Park',
+          date: '2016-10-01'
         },
         {
-          name: "Joe Black",
+          name: 'Joe Black',
           age: 30,
-          address: "Sydney No. 1 Lake Park",
-          date: "2016-10-02"
+          address: 'Sydney No. 1 Lake Park',
+          date: '2016-10-02'
         },
         {
-          name: "Jon Snow",
+          name: 'Jon Snow',
           age: 26,
-          address: "Ottawa No. 2 Lake Park",
-          date: "2016-10-04"
+          address: 'Ottawa No. 2 Lake Park',
+          date: '2016-10-04'
         }
       ]
-    };
+    }
   },
-  created() {},
+  created () {},
   methods: {
-    handleSelectAll(status) {
-      this.$refs.selection.selectAll(status);
+    handleSelectAll (status) {
+      this.$refs.selection.selectAll(status)
     }
   }
-};
+}
 </script>
 <style lang="less">
 </style>

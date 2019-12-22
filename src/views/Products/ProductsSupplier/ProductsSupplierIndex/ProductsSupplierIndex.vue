@@ -24,57 +24,57 @@
 </template>
 
 <script>
-import config from "@/config/config";
-import api from "@/config/api";
+import config from '@/config/config'
+import api from '@/config/api'
 export default {
-  name: "product-supplier-index",
-  data() {
+  name: 'product-supplier-index',
+  data () {
     return {
-      dataTotal: 0, //页总数
+      dataTotal: 0, // 页总数
       currentPage: 1,
       numsPerPage: 10,
       columns: [
         {
-          title: "品牌ID",
-          key: "id"
+          title: '品牌ID',
+          key: 'id'
         },
         {
-          title: "供应商名称",
-          key: "name"
+          title: '供应商名称',
+          key: 'name'
         },
         {
-          title: "供应商描述",
-          key: "desc"
+          title: '供应商描述',
+          key: 'desc'
         },
         {
-          title: "供应商手机号",
-          key: "phone"
+          title: '供应商手机号',
+          key: 'phone'
         },
         {
-          title: "供应商地址",
-          key: "address"
+          title: '供应商地址',
+          key: 'address'
         },
         {
-          title: "联系方式",
-          key: "contact"
+          title: '联系方式',
+          key: 'contact'
         },
         {
-          title: "操作",
-          slot: "action",
+          title: '操作',
+          slot: 'action',
           width: 150,
-          align: "center"
+          align: 'center'
         }
       ],
       list: []
-    };
+    }
   },
-  created() {
-    this.getData();
+  created () {
+    this.getData()
   },
   methods: {
-    getData() {
-      let _this = this;
-      const url = config.host + api.query_supplier_list;
+    getData () {
+      let _this = this
+      const url = config.host + api.query_supplier_list
       return _this.$http.get(
         url,
         {
@@ -82,27 +82,27 @@ export default {
           size: _this.numsPerPage
         },
         res => {
-          console.log(res.data);
+          console.log(res.data)
           if (res.data) {
-            _this.list = res.data.rows;
-            _this.dataTotal = res.data.count;
+            _this.list = res.data.rows
+            _this.dataTotal = res.data.count
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    onAdd() {
-      this.$router.push("/products/products-supplier/products-add-supplier");
+    onAdd () {
+      this.$router.push('/products/products-supplier/products-add-supplier')
     },
-    show(index) {},
-    onChange(page) {
-      this.currentPage = page;
-      this.getData();
+    show (index) {},
+    onChange (page) {
+      this.currentPage = page
+      this.getData()
     }
   }
-};
+}
 </script>
 <style lang="less">
 .goods-table {

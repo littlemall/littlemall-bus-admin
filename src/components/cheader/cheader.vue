@@ -28,29 +28,29 @@
 </template>
 
 <script>
-import menus from "@/data/topmenus";
+import menus from '@/data/topmenus'
 export default {
-  name: "cheader",
-  props: ["selected"],
-  data() {
+  name: 'cheader',
+  props: ['selected'],
+  data () {
     return {
-      username: "",
-      defaultMenu: "home",
+      username: '',
+      defaultMenu: 'home',
       horizontalMnueData: [],
-      dropdata: [{ content: "登出" }]
-    };
+      dropdata: [{ content: '登出' }]
+    }
   },
-  created() {
-    this.horizontalMnueData = menus.getMenu(this.selected);
+  created () {
+    this.horizontalMnueData = menus.getMenu(this.selected)
   },
   methods: {
-    itemclick(name) {
-      console.log(name);
-      let currentmenu = menus.searchMenuByKey(name);
-      this.$router.push(currentmenu.target);
+    itemclick (name) {
+      console.log(name)
+      let currentmenu = menus.searchMenuByKey(name)
+      this.$router.push(currentmenu.target)
     }
   }
-};
+}
 </script>
 <style lang="less">
 @import "./cheader.less";

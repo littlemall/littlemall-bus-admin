@@ -13,36 +13,36 @@
 </template>
 
 <script>
-import Cheader from "@/components/cheader/cheader";
+import Cheader from '@/components/cheader/cheader'
 import Csidemenu from '@/components/csidemenu/csidemenu'
-import menu from "./menu/menu";
-import transform from "@/util/transform.js";
+import menu from './menu/menu'
+import transform from '@/util/transform.js'
 export default {
-  name: "products",
-  props: ["selected"],
-  data() {
+  name: 'products',
+  props: ['selected'],
+  data () {
     return {
       horizontalMnueData: [],
-      sidemenu:menu,
-      selectmenu:'products-list'
-    };
+      sidemenu: menu,
+      selectmenu: 'products-list'
+    }
   },
-  created() {
-   const selected = transform.menuTransStatus(this);
+  created () {
+    const selected = transform.menuTransStatus(this)
     this.selectmenu = selected
-    this.horizontalMnueData = menu.getMenu(selected);
+    this.horizontalMnueData = menu.getMenu(selected)
   },
   components: {
     Cheader,
     Csidemenu
   },
   methods: {
-    itemclick(name) {
-      let currentmenu = menu.searchMenuByKey(name);
-      this.$router.push(currentmenu.target);
+    itemclick (name) {
+      let currentmenu = menu.searchMenuByKey(name)
+      this.$router.push(currentmenu.target)
     }
   }
-};
+}
 </script>
 <style lang="less">
 @import "./Products.less";

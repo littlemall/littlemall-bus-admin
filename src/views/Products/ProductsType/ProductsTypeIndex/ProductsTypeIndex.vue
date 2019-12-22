@@ -24,39 +24,39 @@
 </template>
 
 <script>
-import config from "@/config/config";
-import api from "@/config/api";
+import config from '@/config/config'
+import api from '@/config/api'
 export default {
-  name: "product-type-index",
-  data() {
+  name: 'product-type-index',
+  data () {
     return {
-      dataTotal: 0, //页总数
+      dataTotal: 0, // 页总数
       currentPage: 1,
       numsPerPage: 10,
       columns: [
         {
-          title: "品牌ID",
-          key: "id"
+          title: '品牌ID',
+          key: 'id'
         },
         {
-          title: "商品类型名称",
-          key: "name"
+          title: '商品类型名称',
+          key: 'name'
         },
         {
-          title: "排序值",
-          key: "sort"
-        },
+          title: '排序值',
+          key: 'sort'
+        }
       ],
       list: []
-    };
+    }
   },
-  created() {
-    this.getData();
+  created () {
+    this.getData()
   },
   methods: {
-    getData() {
-      let _this = this;
-      const url = config.host + api.query_type_list;
+    getData () {
+      let _this = this
+      const url = config.host + api.query_type_list
       return _this.$http.get(
         url,
         {
@@ -64,27 +64,27 @@ export default {
           size: _this.numsPerPage
         },
         res => {
-          console.log(res.data);
+          console.log(res.data)
           if (res.data) {
-            _this.list = res.data.rows;
-            _this.dataTotal = res.data.count;
+            _this.list = res.data.rows
+            _this.dataTotal = res.data.count
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    onAdd() {
-      this.$router.push("/products/products-type/products-add-type");
+    onAdd () {
+      this.$router.push('/products/products-type/products-add-type')
     },
-    show(index) {},
-    onChange(page) {
-      this.currentPage = page;
-      this.getData();
+    show (index) {},
+    onChange (page) {
+      this.currentPage = page
+      this.getData()
     }
   }
-};
+}
 </script>
 <style lang="less">
 .goods-table {

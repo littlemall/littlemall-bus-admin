@@ -1,8 +1,8 @@
 export default {
-    data: [
-        {
-            id: '1',
-            name: '漂亮'
-        },
-    ]
+  data: [
+    {
+      id: '1',
+      name: '漂亮'
+    }
+  ]
 }

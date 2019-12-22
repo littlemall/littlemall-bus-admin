@@ -36,34 +36,34 @@
 </template>
 
 <script>
-import categoryMock from "@/mock/mcategory";
-import tagMock from "@/mock/mtags";
-import ajax from "@/util/ajax";
-import config from "@/config/config";
-import api from "@/config/api";
+import categoryMock from '@/mock/mcategory'
+import tagMock from '@/mock/mtags'
+import ajax from '@/util/ajax'
+import config from '@/config/config'
+import api from '@/config/api'
 export default {
-  name: "product-add",
-  data() {
+  name: 'product-add',
+  data () {
     return {
       category: categoryMock.data,
       tag: tagMock.data,
-      switchDefault:false,
+      switchDefault: false,
       caform: {
         name: null,
         sort: null,
         is_used: 0
       }
-    };
+    }
   },
-  created() {},
+  created () {},
   methods: {
-    change(status){
-      this.switchDefault == true? this.caform.is_used  = 1 : this.caform.is_used  = 0
+    change (status) {
+      this.switchDefault === true ? this.caform.is_used = 1 : this.caform.is_used = 0
     },
-    onNext() {
-      const url = config.host + api.add_type;
-      let caform = this.caform;
-      console.log(caform);
+    onNext () {
+      const url = config.host + api.add_type
+      let caform = this.caform
+      console.log(caform)
       ajax.post(
         url,
         {
@@ -73,18 +73,17 @@ export default {
         },
         res => {
           if (res.data) {
-            const { id } = res.data;
-            this.$router.push("/products/products-type/products-type-index");
+            this.$router.push('/products/products-type/products-type-index')
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
       //  console.log(url);
     }
   }
-};
+}
 </script>
 <style lang="less">
 .form-warp {

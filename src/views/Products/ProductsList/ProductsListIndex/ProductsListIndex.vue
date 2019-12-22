@@ -80,119 +80,118 @@
 </template>
 
 <script>
-import config from "@/config/config";
-import api from "@/config/api";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+import config from '@/config/config'
+import api from '@/config/api'
 export default {
-  name: "product-list-index",
-  data() {
+  name: 'product-list-index',
+  data () {
     return {
-      message: "Hi from Vue",
+      message: 'Hi from Vue',
       swiperOptionA: {
         pagination: {
-          el: ".swiper-pagination"
+          el: '.swiper-pagination'
         },
         navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
         }
       },
       currentDetail: {
         photos: [],
-        name: "",
-        keyword: "",
+        name: '',
+        keyword: '',
         inventory: 0
       },
       detailModal: false,
-      dataTotal: 0, //页总数
+      dataTotal: 0, // 页总数
       currentPage: 1,
       numsPerPage: 10,
       columns: [
         {
-          title: "商品名称",
-          slot: "name"
+          title: '商品名称',
+          slot: 'name'
         },
         {
-          title: "商品分类",
-          slot: "category"
+          title: '商品分类',
+          slot: 'category'
         },
         {
-          title: "商品图片",
-          slot: "photo"
+          title: '商品图片',
+          slot: 'photo'
         },
         {
-          title: "商品关键词",
-          key: "keyword"
+          title: '商品关键词',
+          key: 'keyword'
         },
         {
-          title: "商品品牌",
-          slot: "brand"
+          title: '商品品牌',
+          slot: 'brand'
         },
         {
-          title: "商品供应商",
+          title: '商品供应商',
           // key: "supplier_id"
-          slot: "supplier"
+          slot: 'supplier'
         },
         {
-          title: "商品库存",
-          key: "inventory"
+          title: '商品库存',
+          key: 'inventory'
         },
         {
-          title: "商品状态",
-          key: "status"
+          title: '商品状态',
+          key: 'status'
         },
         {
-          title: "操作",
-          slot: "action",
+          title: '操作',
+          slot: 'action',
           width: 200,
-          align: "center"
+          align: 'center'
         }
       ],
       list: [],
       categorys: []
-    };
+    }
   },
-  created() {
-    this.getCategoryList();
-    this.getData();
+  created () {
+    this.getCategoryList()
+    this.getData()
   },
   methods: {
-    onSetTranslate() {
+    onSetTranslate () {
     //  console.log("onSetTranslate");
     },
-    ok() {
-     // this.$Message.info("Clicked ok");
+    ok () {
+      // this.$Message.info("Clicked ok");
     },
-    formateList(arr) {
+    formateList (arr) {
       for (let item of arr) {
-        if (item.photo && item.photo != "") {
-          item["pimg"] = JSON.parse(item.photo)[0].url;
+        if (item.photo && item.photo !== '') {
+          item['pimg'] = JSON.parse(item.photo)[0].url
         }
       }
-      return arr;
+      return arr
     },
-    formatCategory(categoryIds){
-      let arr = categoryIds.split(',');
-      let narr = [];
-      for(let item of arr){
-          let res  = this.getCategoryById(parseInt(item));
-          narr.push(res.name);
+    formatCategory (categoryIds) {
+      let arr = categoryIds.split(',')
+      let narr = []
+      for (let item of arr) {
+        let res = this.getCategoryById(parseInt(item))
+        narr.push(res.name)
       }
-      return narr.join(',');
+      return narr.join(',')
     },
-    getCategoryById(id){
-      console.log(id);
-      let result;
-      for(let i = 0 ; i< this.categorys.length; i++){
-        if(id === this.categorys[i].id){
+    getCategoryById (id) {
+      console.log(id)
+      let result
+      for (let i = 0; i < this.categorys.length; i++) {
+        if (id === this.categorys[i].id) {
           result = this.categorys[i]
         }
       }
-      return result;
+      return result
     },
-    getCategoryList() {
-      let _this = this;
-      const url = config.host + api.query_good_category_list;
+    getCategoryList () {
+      let _this = this
+      const url = config.host + api.query_good_category_list
       return _this.$http.get(
         url,
         {
@@ -200,19 +199,19 @@ export default {
           size: 500
         },
         res => {
-          console.log(res.data);
+          console.log(res.data)
           if (res.data) {
-            _this.categorys = res.data.rows;
+            _this.categorys = res.data.rows
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    getData() {
-      let _this = this;
-      const url = config.host + api.query_good_list;
+    getData () {
+      let _this = this
+      const url = config.host + api.query_good_list
       return _this.$http.get(
         url,
         {
@@ -221,55 +220,55 @@ export default {
         },
         res => {
           if (res.data) {
-            _this.list = _this.formateList(res.data.rows);
-            console.log(_this.list);
-            _this.dataTotal = res.data.count;
+            _this.list = _this.formateList(res.data.rows)
+            console.log(_this.list)
+            _this.dataTotal = res.data.count
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    onAdd() {
-      this.$router.push("/products/products-list/products-add");
+    onAdd () {
+      this.$router.push('/products/products-list/products-add')
     },
-    edit(index) {
-      const itemId = this.list[index].id;
-      this.$router.push("/products/products-list/products-add?id=" + itemId);
+    edit (index) {
+      const itemId = this.list[index].id
+      this.$router.push('/products/products-list/products-add?id=' + itemId)
     },
-    show(index) {
-      this.currentDetail = this.list[index];
-      this.currentDetail["imgs"] = JSON.parse(this.currentDetail.photo);
-      this.detailModal = true;
+    show (index) {
+      this.currentDetail = this.list[index]
+      this.currentDetail['imgs'] = JSON.parse(this.currentDetail.photo)
+      this.detailModal = true
     },
-    remove(index) {
-      let _this = this;
-      const obj = this.list[index];
-      let id = obj.id;
-      const url = config.host + api.del_good;
+    remove (index) {
+      let _this = this
+      const obj = this.list[index]
+      let id = obj.id
+      const url = config.host + api.del_good
       return _this.$http.post(
         url,
         {
           id
         },
         res => {
-          if (res.code == 200) {
-            this.$Message.info("删除成功!");
-            _this.getData();
+          if (parseInt(res.code) === 200) {
+            this.$Message.info('删除成功!')
+            _this.getData()
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    onChange(page) {
-      this.currentPage = page;
-      this.getData();
+    onChange (page) {
+      this.currentPage = page
+      this.getData()
     }
   }
-};
+}
 </script>
 <style lang="less">
 .goods-table {
