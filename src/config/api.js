@@ -25,6 +25,15 @@ export default {
   'query_type_list': '/goods/admin/query_type_list',
   'add_type': '/goods/admin/add_type',
   'query_type': '/goods/admin/query_type',
-  'update_type': '/goods/admin/update_type'
+  'update_type': '/goods/admin/update_type',
+
+  'session_list': '/session/admin/session_list',
+  'add_session': '/session/admin/add_session',
+  'update_session': '/session/admin/update_session',
+  'delete_session': '/session/admin/delete_session',
+  'add_session_good': '/session/admin/add_session_good',
+  'query_session': '/session/admin/query_session',
+  'delete_session_good': '/session/admin/delete_session_good',
+  'session_good_list': '/session/admin/session_good_list'
 
 }
