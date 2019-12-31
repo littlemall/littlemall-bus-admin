@@ -34,6 +34,7 @@ const ProductsTypeAdd = resolve => require(['@/views/Products/ProductsType/Produ
 // session
 const SessionsList = resolve => require(['@/views/Sessions/SessionsList/SessionsList'], resolve)
 const SessionsListIndex = resolve => require(['@/views/Sessions/SessionsList/SessionsListIndex/SessionsListIndex'], resolve)
+const SessionsAdd = resolve => require(['@/views/Sessions/SessionsList/SessionsAdd/SessionsAdd'], resolve)
 
 Vue.use(Router)
 
@@ -60,6 +61,11 @@ export default new Router({
               name: 'sessions-list-index',
               path: 'sessions-list-index',
               component: SessionsListIndex
+            },
+            {
+              name: 'sessions-add',
+              path: 'sessions-add',
+              component: SessionsAdd
             }
           ]
         }

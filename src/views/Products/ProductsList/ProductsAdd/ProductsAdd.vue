@@ -188,23 +188,22 @@
 </template>
 
 <script>
-import tagMock from "@/mock/mtags";
-import ajax from "@/util/ajax";
-import config from "@/config/config";
-import api from "@/config/api";
-import { parse } from 'path';
-const uuidv4 = require("uuid/v4");
+import tagMock from '@/mock/mtags'
+import ajax from '@/util/ajax'
+import config from '@/config/config'
+import api from '@/config/api'
+const uuidv4 = require('uuid/v4')
 
 export default {
-  name: "product-add",
-  data() {
+  name: 'product-add',
+  data () {
     return {
-      goodId: "",
+      goodId: '',
       userform: {
-        id: "",
-        name: "", // 商品名称
-        promotion: "", //商品推荐语
-        category:[],
+        id: '',
+        name: '', // 商品名称
+        promotion: '', // 商品推荐语
+        category: [],
         category_id: null, // 商品分类id
         keyword: null, // 商品关键词
         unit: null, // 商品单元
@@ -235,25 +234,25 @@ export default {
       tag: tagMock.data,
       brand: [],
       supplyer: []
-    };
+    }
   },
-  created() {
+  created () {
     // 获取商品ID
-    this.goodId = this.$route.query.id;
-    this.userform.sku_code = uuidv4();
-      //获取商品标签接口
-    this.getGoodsType();
+    this.goodId = this.$route.query.id
+    this.userform.sku_code = uuidv4()
+    // 获取商品标签接口
+    this.getGoodsType()
     // 获取商品树形分类接口
-    this.getGoodsCategoryTree();
+    this.getGoodsCategoryTree()
     // 获取商品品牌接口
-    this.getGoodsBrand();
+    this.getGoodsBrand()
     // 获取供货商接口
-    this.getGoodsSupplyer();
+    this.getGoodsSupplyer()
     if (this.goodId) {
       // 编辑页面
       // 获取商品数据
-      let _this = this;
-      const url = config.host + api.query_good;
+      let _this = this
+      const url = config.host + api.query_good
       _this.$http.get(
         url,
         {
@@ -261,60 +260,59 @@ export default {
         },
         res => {
           if (res.data) {
-            let goodDetail = res.data[0];
-            let categoryItem = [];
+            let goodDetail = res.data[0]
+            let categoryItem = []
             if (goodDetail.category_id) {
-              categoryItem = goodDetail.category_id.split(",");
+              categoryItem = goodDetail.category_id.split(',')
             }
-            for(let i =0; i<categoryItem.length; i++){
-              categoryItem[i] = parseInt(categoryItem[i]);
+            for (let i = 0; i < categoryItem.length; i++) {
+              categoryItem[i] = parseInt(categoryItem[i])
             }
-            _this.userform.name = goodDetail.name;
-            _this.userform.id = goodDetail.id;
-            _this.userform.promotion = goodDetail.promotion;
-            _this.userform.category = categoryItem;
-            _this.userform.keyword = goodDetail.keyword;
-            _this.userform.unit = goodDetail.unit;
-            _this.userform.tags = goodDetail.tags;
-            _this.userform.brand_id = goodDetail.brand_id;
-            _this.userform.supplier_id = goodDetail.supplier_id;
-            _this.userform.base_sale = goodDetail.base_sale;
-            _this.userform.base_click = goodDetail.base_click;
-            _this.userform.base_share = goodDetail.base_share;
-            _this.userform.product_code = goodDetail.product_code;
-            _this.userform.starttime = goodDetail.starttime;
-            _this.userform.validity_period = goodDetail.validity_period;
-            _this.userform.inventory = goodDetail.inventory;
-            _this.userform.inventory_warn = goodDetail.inventory_warn;
-            _this.userform.place = goodDetail.place;
-            _this.userform.sku_ids = goodDetail.sku_ids;
-            _this.userform.type_id = goodDetail.type_id;
-            _this.userform.media = goodDetail.media;
-            _this.userform.detail = goodDetail.detail;
-            _this.userform.sku_code = goodDetail.good_goodsskus[0].code;
-            _this.userform.sku_name = goodDetail.good_goodsskus[0].name;
+            _this.userform.name = goodDetail.name
+            _this.userform.id = goodDetail.id
+            _this.userform.promotion = goodDetail.promotion
+            _this.userform.category = categoryItem
+            _this.userform.keyword = goodDetail.keyword
+            _this.userform.unit = goodDetail.unit
+            _this.userform.tags = goodDetail.tags
+            _this.userform.brand_id = goodDetail.brand_id
+            _this.userform.supplier_id = goodDetail.supplier_id
+            _this.userform.base_sale = goodDetail.base_sale
+            _this.userform.base_click = goodDetail.base_click
+            _this.userform.base_share = goodDetail.base_share
+            _this.userform.product_code = goodDetail.product_code
+            _this.userform.starttime = goodDetail.starttime
+            _this.userform.validity_period = goodDetail.validity_period
+            _this.userform.inventory = goodDetail.inventory
+            _this.userform.inventory_warn = goodDetail.inventory_warn
+            _this.userform.place = goodDetail.place
+            _this.userform.sku_ids = goodDetail.sku_ids
+            _this.userform.type_id = goodDetail.type_id
+            _this.userform.media = goodDetail.media
+            _this.userform.detail = goodDetail.detail
+            _this.userform.sku_code = goodDetail.good_goodsskus[0].code
+            _this.userform.sku_name = goodDetail.good_goodsskus[0].name
             _this.userform.sku_attr =
-              goodDetail.good_goodsskus[0].attr_values_items;
+              goodDetail.good_goodsskus[0].attr_values_items
             _this.userform.sku_market_price =
-              goodDetail.good_goodsskus[0].market_price;
-            _this.userform.sku_price = goodDetail.good_goodsskus[0].price;
-            _this.userform.sku_stock = goodDetail.good_goodsskus[0].stock;
+              goodDetail.good_goodsskus[0].market_price
+            _this.userform.sku_price = goodDetail.good_goodsskus[0].price
+            _this.userform.sku_stock = goodDetail.good_goodsskus[0].stock
             // _this.supplyer = res.data.rows;
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     } else {
-      //新增商品页面
+      // 新增商品页面
     }
-  
   },
   methods: {
-    getGoodsSupplyer() {
-      let _this = this;
-      const url = config.host + api.query_supplier_list;
+    getGoodsSupplyer () {
+      let _this = this
+      const url = config.host + api.query_supplier_list
       return _this.$http.get(
         url,
         {
@@ -323,17 +321,17 @@ export default {
         },
         res => {
           if (res.data) {
-            _this.supplyer = res.data.rows;
+            _this.supplyer = res.data.rows
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    getGoodsBrand() {
-      let _this = this;
-      const url = config.host + api.query_brand_list;
+    getGoodsBrand () {
+      let _this = this
+      const url = config.host + api.query_brand_list
       return _this.$http.get(
         url,
         {
@@ -342,33 +340,33 @@ export default {
         },
         res => {
           if (res.data) {
-            _this.brand = res.data.rows;
+            _this.brand = res.data.rows
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    getGoodsCategoryTree() {
-      let _this = this;
-      const url = config.host + api.query_category_tree;
+    getGoodsCategoryTree () {
+      let _this = this
+      const url = config.host + api.query_category_tree
       return _this.$http.get(
         url,
         {},
         res => {
           if (res.data) {
-            _this.category = res.data;
+            _this.category = res.data
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    getGoodsType() {
-      let _this = this;
-      const url = config.host + api.query_type_list;
+    getGoodsType () {
+      let _this = this
+      const url = config.host + api.query_type_list
       return _this.$http.get(
         url,
         {
@@ -377,20 +375,20 @@ export default {
         },
         res => {
           if (res.data) {
-            _this.tag = res.data.rows;
+            _this.tag = res.data.rows
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
     },
-    onNext() {
+    onNext () {
       if (this.goodId) {
         // 编辑页面
-        const url = config.host + api.update_good;
-        let userform = this.userform;
-        this.userform.category_id = this.userform.category.join(",");
+        const url = config.host + api.update_good
+        let userform = this.userform
+        this.userform.category_id = this.userform.category.join(',')
         ajax.post(
           url,
           {
@@ -420,21 +418,21 @@ export default {
           },
           res => {
             if (res.data) {
-              const { id } = res.data;
+              const { id } = res.data
               this.$router.push(
-                "/products/products-list/products-addpic?id=" + id
-              );
+                '/products/products-list/products-addpic?id=' + id
+              )
             }
           },
           e => {
-            console.log(e);
+            console.log(e)
           }
-        );
+        )
       } else {
         // 新增页面
-        const url = config.host + api.addGood;
-        let userform = this.userform;
-        this.userform.category_id = this.userform.category.join(",");
+        const url = config.host + api.addGood
+        let userform = this.userform
+        this.userform.category_id = this.userform.category.join(',')
         ajax.post(
           url,
           {
@@ -468,20 +466,20 @@ export default {
           },
           res => {
             if (res.data) {
-              const { id } = res.data;
+              const { id } = res.data
               this.$router.push(
-                "/products/products-list/products-addpic?id=" + id
-              );
+                '/products/products-list/products-addpic?id=' + id
+              )
             }
           },
           e => {
-            console.log(e);
+            console.log(e)
           }
-        );
+        )
       }
     }
   }
-};
+}
 </script>
 <style lang="less">
 .form-warp {

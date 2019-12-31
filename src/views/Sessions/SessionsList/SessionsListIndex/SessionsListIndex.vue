@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     onAdd () {
-
+      this.$router.push('/sessions/sessions-list/sessions-add')
     },
     show () {
 
