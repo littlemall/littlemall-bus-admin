@@ -16,6 +16,7 @@ Vue.use(MQuillEditor)
 Vue.config.productionTip = false
 Vue.prototype.$http = ajax
 Vue.use(VueAwesomeSwiper /* { default global options } */)
+// Vue.use(vcolorpicker)
 
 new Vue({
   router,

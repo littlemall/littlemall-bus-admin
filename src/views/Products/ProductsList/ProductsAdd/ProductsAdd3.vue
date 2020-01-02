@@ -20,77 +20,77 @@
 </template>
 
 <script>
-import MQuillEditor from "vue-m-quill-editor";
+import MQuillEditor from 'vue-m-quill-editor'
 
 export default {
-  name: "product-add3",
-  data() {
+  name: 'product-add3',
+  data () {
     return {
       userform: {
         media: null, // 商品媒体数据地址（视频）
         detail: null // 商品详情信息
       },
-      qillObj:null,
+      qillObj: null,
       quill: {
         border: false,
-        content: "wellcome ~",
+        content: 'wellcome ~',
         syncOutput: false,
-        theme: "snow", //bubble snow
+        theme: 'snow', // bubble snow
         disabled: false,
         full: false,
         toolbar: [
           [{ header: 1 }, { header: 2 }],
           [
-            "bold",
-            "italic",
-            "underline",
-            "strike",
-            "link",
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'link',
             { header: [1, 2, 3, 4, 5, 6, false] }
           ],
-          ["blockquote", "code-block"],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ indent: "-1" }, { indent: "+1" }],
-          [{ direction: "rtl" }],
+          ['blockquote', 'code-block'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ script: 'sub' }, { script: 'super' }],
+          [{ indent: '-1' }, { indent: '+1' }],
+          [{ direction: 'rtl' }],
           [{ color: [] }, { background: [] }],
           [
-            { align: "" },
-            { align: "right" },
-            { align: "center" },
-            { align: "justify" }
+            { align: '' },
+            { align: 'right' },
+            { align: 'center' },
+            { align: 'justify' }
           ],
-          ["image", "video"],
-          ["clean"]
+          ['image', 'video'],
+          ['clean']
         ]
       }
-    };
+    }
   },
   components: {
     MQuillEditor
   },
-  created() {},
+  created () {},
   methods: {
-      onInit(quill, MQuillEditor){
-          this.qillObj = MQuillEditor;
-          //console.log(MQuillEditor)
-      },
-      onchange(val){
-          console.log(val)
-      },
-    upload(file, insert) {
-      console.log(file);
-      insert(
-        "https://avatars0.githubusercontent.com/u/11366654?s=460&v=4",
-        "center"
-      );
+    onInit (quill, MQuillEditor) {
+      this.qillObj = MQuillEditor
+      // console.log(MQuillEditor)
     },
-    onSubmit(){
-        console.log(this.qillObj.getContent());
-        //console.log(MQuillEditor.getContent())
+    onchange (val) {
+      console.log(val)
+    },
+    upload (file, insert) {
+      console.log(file)
+      insert(
+        'https://avatars0.githubusercontent.com/u/11366654?s=460&v=4',
+        'center'
+      )
+    },
+    onSubmit () {
+      console.log(this.qillObj.getContent())
+      // console.log(MQuillEditor.getContent())
     }
   }
-};
+}
 </script>
 <style lang="less">
 .form-warp {

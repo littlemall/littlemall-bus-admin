@@ -34,6 +34,7 @@
         show-elevator
         show-sizer
         @on-change="onChange"
+        class-name="goodpage"
       />
     </div>
     <div class="goods-detail">
@@ -321,5 +322,8 @@ export default {
 }
 .good-detail img {
   width: 100% !important;
+}
+.goodpage{
+  margin-top: 10px;
 }
 </style>
