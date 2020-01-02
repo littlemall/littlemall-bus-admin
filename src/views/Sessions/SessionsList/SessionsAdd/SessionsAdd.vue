@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="max-height:800px">
      <h2>添加专场</h2>
       <Divider />
        <div class="form-warp">
@@ -69,7 +69,7 @@
         </Form>
          <Divider />
         <h3 style="margin-bottom:10px">添加关联商品</h3>
-        <Table border :columns="columns" :data="list" className="goodTabel" @on-selection-change="onSelectProduct">
+        <Table  ref="goodselect" border :columns="columns" :data="list" className="goodTabel" @on-selection-change="onSelectProduct">
             <template slot-scope="{ row }" slot="name">
               <div alt="row.name" src="javascript:void(0)" class="t-title">{{ row.name }}</div>
             </template>
@@ -91,6 +91,7 @@
       <Page
         :total="dataTotal"
         :current="currentPage"
+        :page-size="numsPerPage"
         size="small"
         show-elevator
         show-sizer
@@ -122,9 +123,9 @@ export default {
         banner_mobile: '',
         bgcolor: '#fff'
       },
-      dataTotal: 0, // 页总数
+      dataTotal: 1, // 页总数
       currentPage: 1,
-      numsPerPage: 10,
+      numsPerPage: 2,
       columns: [
         {
           type: 'selection',
@@ -162,7 +163,8 @@ export default {
         }
       ],
       list: [],
-      categorys: []
+      categorys: [],
+      selected: {}
     }
   },
   created () {
@@ -171,7 +173,13 @@ export default {
   },
   methods: {
     onSelectProduct (selection) {
-      console.log(selection)
+      const cindex = this.currentPage
+      this.selected[cindex] = selection
+    },
+    judeAddList (selection) {
+      // const arr = this.selectedList;
+      // for(let i = 0 ; i <arr.length; i++){
+      // }
     },
     handlePic (res, file) {
       this.session.photos = 'http://10.18.120.228:7001' + res.data.path
@@ -183,6 +191,7 @@ export default {
       this.session.banner_mobile = 'http://10.18.120.228:7001' + res.data.path
     },
     onSubmit () {
+      console.log(this.selected)
       const url = config.host + api.add_session
       ajax.post(
         url,
@@ -275,6 +284,7 @@ export default {
     onChange (page) {
       this.currentPage = page
       this.getData()
+      console.log(this.$refs.goodselect)
     }
   }
 }

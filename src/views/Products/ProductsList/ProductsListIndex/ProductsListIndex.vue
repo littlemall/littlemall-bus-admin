@@ -30,6 +30,7 @@
       <Page
         :total="dataTotal"
         :current="currentPage"
+        :page-size="numsPerPage"
         size="small"
         show-elevator
         show-sizer
