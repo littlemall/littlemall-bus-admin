@@ -12,13 +12,12 @@
             <img :src="row.photos" width="100px" style="margin:10px 0 0 0" />
           </div>
         </template>
-               <template slot-scope="{ row }" slot="banner_pc">
+        <template slot-scope="{ row }" slot="banner_pc">
           <div>
             <img :src="row.banner_pc" width="100px" style="margin:10px 0 0 0" />
           </div>
         </template>
         <template slot-scope="{ row, index }" slot="action">
-          <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">查看</Button>
           <Button type="primary" size="small" style="margin-right: 5px" @click="edit(index)">编辑</Button>
           <Button type="error" size="small" @click="remove(index)">删除</Button>
         </template>
@@ -26,9 +25,11 @@
       <Page
         :total="dataTotal"
         :current="currentPage"
+        :page-size="numsPerPage"
         size="small"
         show-elevator
         show-sizer
+        class-name="sessionpage"
         @on-change="onChange"
       />
     </div>
@@ -38,6 +39,7 @@
 <script>
 import config from '@/config/config'
 import api from '@/config/api'
+import moment from 'moment'
 export default {
   name: 'session-list-index',
   data () {
@@ -106,7 +108,12 @@ export default {
         res => {
           if (res.data) {
             _this.list = res.data.rows
-            console.log(_this.list)
+            for (let item of _this.list) {
+              if (item.start_at && item.end_at) {
+                item.start_at = moment(item.start_at).format('YYYY-MM-DD hh:mm:ss')
+                item.end_at = moment(item.end_at).format('YYYY-MM-DD hh:mm:ss')
+              }
+            }
             _this.dataTotal = res.data.count
           }
         },
@@ -114,6 +121,9 @@ export default {
           console.log(e)
         }
       )
+    },
+    onChange () {
+
     }
   }
 }
@@ -125,5 +135,8 @@ export default {
   width: 10px;
   height: 10px;
   border: 1px solid #000;
+}
+.sessionpage{
+  margin-top: 10px
 }
 </style>

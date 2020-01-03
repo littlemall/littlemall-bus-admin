@@ -31,12 +31,12 @@
         <Row>
           <Col span="12">
             <FormItem label="开始时间" :label-width="80">
-              <DatePicker v-model="session.start_at"  type="daterange" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+              <DatePicker v-model="session.start_at"   placeholder="Select date" style="width: 200px"></DatePicker>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="结束时间" :label-width="80">
-              <DatePicker v-model="session.end_at" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+              <DatePicker v-model="session.end_at"  placeholder="Select date" style="width: 200px"></DatePicker>
             </FormItem>
           </Col>
         </Row>
@@ -229,6 +229,10 @@ export default {
         },
         res => {
           if (res.data) {
+            this.$Message.success('添加专场成功')
+            setTimeout(() => {
+              this.$router.push('/sessions/sessions-list/sessions-list-index')
+            }, 1000)
           }
         },
         e => {
@@ -300,7 +304,6 @@ export default {
           }
         },
         e => {
-          console.log(e)
         }
       )
     },
