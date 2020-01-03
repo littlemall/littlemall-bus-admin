@@ -22,9 +22,21 @@
               <Input v-model="session.desc" style="width: 380px" placeholder="描述" />
             </FormItem>
           </Col>
-                <Col span="12">
+          <Col span="12">
             <FormItem label="背景色" :label-width="80">
                <ColorPicker v-model="session.bgcolor" alpha editable @change="changeColor"/>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="12">
+            <FormItem label="开始时间" :label-width="80">
+              <DatePicker v-model="session.start_at"  type="daterange" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="结束时间" :label-width="80">
+              <DatePicker v-model="session.end_at" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
             </FormItem>
           </Col>
         </Row>
@@ -75,7 +87,7 @@
           :columns="columns"
           :data="list"
           className="goodTabel"
-          :height="400"
+          :height="350"
           @on-selection-change="onSelectProduct"
           >
               <template slot-scope="{ row }" slot="name">
@@ -129,7 +141,9 @@ export default {
         photos: '',
         banner_pc: '',
         banner_mobile: '',
-        bgcolor: '#fff'
+        bgcolor: '#fff',
+        start_at: '',
+        end_at: ''
       },
       dataTotal: 1, // 页总数
       currentPage: 1,
@@ -209,6 +223,8 @@ export default {
           banner_pc: this.session.banner_pc,
           banner_mobile: this.session.banner_mobile,
           bgcolor: this.session.bgcolor,
+          start_at: this.session.start_at,
+          end_at: this.session.end_at,
           selecStr: selectList.join(',')
         },
         res => {

@@ -7,6 +7,16 @@
          <template slot-scope="{ row }" slot="bgcolor">
           <div alt="row.name" src="javascript:void(0)" class="bgcolor" :style="'background-color: '+row.bgcolor"></div>
         </template>
+         <template slot-scope="{ row }" slot="photos">
+          <div>
+            <img :src="row.photos" width="100px" style="margin:10px 0 0 0" />
+          </div>
+        </template>
+               <template slot-scope="{ row }" slot="banner_pc">
+          <div>
+            <img :src="row.banner_pc" width="100px" style="margin:10px 0 0 0" />
+          </div>
+        </template>
         <template slot-scope="{ row, index }" slot="action">
           <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">查看</Button>
           <Button type="primary" size="small" style="margin-right: 5px" @click="edit(index)">编辑</Button>
@@ -42,20 +52,12 @@ export default {
           key: 'name'
         },
         {
-          title: '关键词',
-          key: 'keyword'
-        },
-        {
-          title: '描述',
-          key: 'desc'
-        },
-        {
           title: '专场图片',
-          key: 'photos'
+          slot: 'photos'
         },
         {
           title: 'PC Banner',
-          key: 'banner_pc'
+          slot: 'banner_pc'
         },
         {
           title: '背景色',
