@@ -1,5 +1,5 @@
 <template>
-  <div style="max-height:800px">
+  <div>
      <h2>添加专场</h2>
       <Divider />
        <div class="form-warp">
@@ -69,35 +69,43 @@
         </Form>
          <Divider />
         <h3 style="margin-bottom:10px">添加关联商品</h3>
-        <Table  ref="goodselect" border :columns="columns" :data="list" className="goodTabel" @on-selection-change="onSelectProduct">
-            <template slot-scope="{ row }" slot="name">
-              <div alt="row.name" src="javascript:void(0)" class="t-title">{{ row.name }}</div>
-            </template>
-            <template slot-scope="{ row }" slot="category">
-              <div> {{formatCategory(row.category_id)}}</div>
-            </template>
-            <template slot-scope="{ row }" slot="brand">
-              <div>{{row.good_goodsbrand.name}}</div>
-            </template>
-            <template slot-scope="{ row }" slot="supplier">
-              <div>{{row.good_goodssupplier.name}}</div>
-            </template>
-            <template slot-scope="{ row }" slot="photo">
-              <div>
-                <img :src="row.pimg" width="100px" style="margin:10px 0 0 0" />
-              </div>
-            </template>
-        </Table>
-      <Page
-        :total="dataTotal"
-        :current="currentPage"
-        :page-size="numsPerPage"
-        size="small"
-        show-elevator
-        show-sizer
-        @on-change="onChange"
-        class-name="goodpage"
-      />
+          <Table
+          ref="goodselect"
+          border
+          :columns="columns"
+          :data="list"
+          className="goodTabel"
+          :height="400"
+          @on-selection-change="onSelectProduct"
+          >
+              <template slot-scope="{ row }" slot="name">
+                <div alt="row.name" src="javascript:void(0)" class="t-title">{{ row.name }}</div>
+              </template>
+              <template slot-scope="{ row }" slot="category">
+                <div> {{formatCategory(row.category_id)}}</div>
+              </template>
+              <template slot-scope="{ row }" slot="brand">
+                <div>{{row.good_goodsbrand.name}}</div>
+              </template>
+              <template slot-scope="{ row }" slot="supplier">
+                <div>{{row.good_goodssupplier.name}}</div>
+              </template>
+              <template slot-scope="{ row }" slot="photo">
+                <div>
+                  <img :src="row.pimg" width="100px" style="margin:10px 0 0 0" />
+                </div>
+              </template>
+          </Table>
+        <Page
+          :total="dataTotal"
+          :current="currentPage"
+          :page-size="numsPerPage"
+          size="small"
+          show-elevator
+          show-sizer
+          @on-change="onChange"
+          class-name="goodpage"
+        />
         <div style="margin-top:50px">
           <Button type="primary" @click="onSubmit">提交</Button>
         </div>
@@ -125,7 +133,7 @@ export default {
       },
       dataTotal: 1, // 页总数
       currentPage: 1,
-      numsPerPage: 2,
+      numsPerPage: 200,
       columns: [
         {
           type: 'selection',
@@ -164,7 +172,7 @@ export default {
       ],
       list: [],
       categorys: [],
-      selected: {}
+      selectList: []
     }
   },
   created () {
@@ -173,13 +181,7 @@ export default {
   },
   methods: {
     onSelectProduct (selection) {
-      const cindex = this.currentPage
-      this.selected[cindex] = selection
-    },
-    judeAddList (selection) {
-      // const arr = this.selectedList;
-      // for(let i = 0 ; i <arr.length; i++){
-      // }
+      this.selectList = selection
     },
     handlePic (res, file) {
       this.session.photos = 'http://10.18.120.228:7001' + res.data.path
@@ -191,8 +193,12 @@ export default {
       this.session.banner_mobile = 'http://10.18.120.228:7001' + res.data.path
     },
     onSubmit () {
-      console.log(this.selected)
       const url = config.host + api.add_session
+      let selectList = []
+      for (let i = 0; i < this.selectList.length; i++) {
+        selectList.push(this.selectList[i].id)
+      }
+      console.log(selectList.join(','))
       ajax.post(
         url,
         {
@@ -202,7 +208,8 @@ export default {
           photos: this.session.photos,
           banner_pc: this.session.banner_pc,
           banner_mobile: this.session.banner_mobile,
-          bgcolor: this.session.bgcolor
+          bgcolor: this.session.bgcolor,
+          selecStr: selectList.join(',')
         },
         res => {
           if (res.data) {
