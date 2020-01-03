@@ -87,6 +87,26 @@ export default {
     this.getData()
   },
   methods: {
+    remove (index) {
+      const obj = this.list[index]
+      let id = obj.id
+      const url = config.host + api.delete_session
+      return this.$http.post(
+        url,
+        {
+          id
+        },
+        res => {
+          if (parseInt(res.code) === 200) {
+            this.$Message.info('删除成功!')
+            this.getData()
+          }
+        },
+        e => {
+          console.log(e)
+        }
+      )
+    },
     onAdd () {
       this.$router.push('/sessions/sessions-list/sessions-add')
     },
