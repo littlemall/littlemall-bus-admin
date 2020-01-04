@@ -113,8 +113,9 @@ export default {
     show () {
 
     },
-    edit () {
-
+    edit (index) {
+      const itemId = this.list[index].id
+      this.$router.push('/sessions/sessions-list/sessions-add?id=' + itemId)
     },
     getData () {
       let _this = this

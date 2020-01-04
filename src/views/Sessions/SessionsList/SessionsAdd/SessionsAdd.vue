@@ -190,8 +190,31 @@ export default {
     }
   },
   created () {
+    this.sessionId = this.$route.query.id
     this.getCategoryList()
     this.getData()
+    if (this.sessionId) {
+    // 编辑页面
+    // 获取专场数据
+      let _this = this
+      const url = config.host + api.query_session
+      _this.$http.get(
+        url,
+        {
+          session_id: this.sessionId
+        },
+        res => {
+          if (res.data) {
+            console.log(res.data)
+          }
+        },
+        e => {
+          console.log(e)
+        }
+      )
+    } else {
+
+    }
   },
   methods: {
     onSelectProduct (selection) {
