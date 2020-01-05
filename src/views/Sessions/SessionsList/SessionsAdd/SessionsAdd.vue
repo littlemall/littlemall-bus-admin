@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height:800px">
      <h2>添加专场</h2>
       <Divider />
        <div class="form-warp">
@@ -87,7 +87,6 @@
           :columns="columns"
           :data="list"
           className="goodTabel"
-          :height="350"
           @on-selection-change="onSelectProduct"
           >
               <template slot-scope="{ row }" slot="name">
@@ -95,12 +94,6 @@
               </template>
               <template slot-scope="{ row }" slot="category">
                 <div> {{formatCategory(row.category_id)}}</div>
-              </template>
-              <template slot-scope="{ row }" slot="brand">
-                <div>{{row.good_goodsbrand.name}}</div>
-              </template>
-              <template slot-scope="{ row }" slot="supplier">
-                <div>{{row.good_goodssupplier.name}}</div>
               </template>
               <template slot-scope="{ row }" slot="photo">
                 <div>
@@ -150,11 +143,6 @@ export default {
       numsPerPage: 200,
       columns: [
         {
-          type: 'selection',
-          width: 60,
-          align: 'center'
-        },
-        {
           title: '商品名称',
           slot: 'name'
         },
@@ -171,15 +159,6 @@ export default {
           key: 'keyword'
         },
         {
-          title: '商品品牌',
-          slot: 'brand'
-        },
-        {
-          title: '商品供应商',
-          // key: "supplier_id"
-          slot: 'supplier'
-        },
-        {
           title: '商品库存',
           key: 'inventory'
         }
@@ -192,20 +171,24 @@ export default {
   created () {
     this.sessionId = this.$route.query.id
     this.getCategoryList()
-    this.getData()
     if (this.sessionId) {
     // 编辑页面
-    // 获取专场数据
-      let _this = this
-      const url = config.host + api.query_session
-      _this.$http.get(
+      // 获取专场所属商品列表
+      const url = config.host + api.session_good_list
+      this.$http.get(
         url,
         {
-          session_id: this.sessionId
+          session_id: this.sessionId,
+          page: 1,
+          size: 500
         },
         res => {
           if (res.data) {
             console.log(res.data)
+            if (res.data && res.data.rows && res.data.rows.length > 0) {
+              this.formatEditSession(res.data.rows[0].session_session)
+              this.formatEditGoods(res.data.rows)
+            }
           }
         },
         e => {
@@ -213,10 +196,35 @@ export default {
         }
       )
     } else {
-
+      this.columns.unshift({
+        type: 'selection',
+        width: 60,
+        align: 'center'
+      })
+      this.getData()
     }
   },
   methods: {
+    formatEditGoods (rows) {
+      this.dataTotal = rows.length
+      let temparr = []
+      for (const item of rows) {
+        const good = item.good_good
+        temparr.push(good)
+      }
+      this.list = this.formateList(temparr)
+    },
+    formatEditSession (session) {
+      this.session.name = session.name
+      this.session.keyword = session.keyword
+      this.session.desc = session.desc
+      this.session.photos = session.photos
+      this.session.banner_pc = session.banner_pc
+      this.session.banner_mobile = session.banner_pc
+      this.session.bgcolor = session.bgcolor
+      this.session.start_at = session.start_at
+      this.session.end_at = session.end_at
+    },
     onSelectProduct (selection) {
       this.selectList = selection
     },
@@ -230,38 +238,67 @@ export default {
       this.session.banner_mobile = 'http://10.18.120.228:7001' + res.data.path
     },
     onSubmit () {
-      const url = config.host + api.add_session
-      let selectList = []
-      for (let i = 0; i < this.selectList.length; i++) {
-        selectList.push(this.selectList[i].id)
-      }
-      console.log(selectList.join(','))
-      ajax.post(
-        url,
-        {
-          name: this.session.name,
-          keyword: this.session.keyword,
-          desc: this.session.desc,
-          photos: this.session.photos,
-          banner_pc: this.session.banner_pc,
-          banner_mobile: this.session.banner_mobile,
-          bgcolor: this.session.bgcolor,
-          start_at: this.session.start_at,
-          end_at: this.session.end_at,
-          selecStr: selectList.join(',')
-        },
-        res => {
-          if (res.data) {
-            this.$Message.success('添加专场成功')
-            setTimeout(() => {
-              this.$router.push('/sessions/sessions-list/sessions-list-index')
-            }, 1000)
+      if (this.sessionId) {
+        const url = config.host + api.update_session
+        ajax.post(
+          url,
+          {
+            id: this.sessionId,
+            name: this.session.name,
+            keyword: this.session.keyword,
+            desc: this.session.desc,
+            photos: this.session.photos,
+            banner_pc: this.session.banner_pc,
+            banner_mobile: this.session.banner_mobile,
+            bgcolor: this.session.bgcolor,
+            start_at: this.session.start_at,
+            end_at: this.session.end_at
+          },
+          res => {
+            if (res.data) {
+              this.$Message.success('更新专场成功')
+              setTimeout(() => {
+                this.$router.push('/sessions/sessions-list/sessions-list-index')
+              }, 1000)
+            }
+          },
+          e => {
+            console.log(e)
           }
-        },
-        e => {
-          console.log(e)
+        )
+      } else {
+        const url = config.host + api.add_session
+        let selectList = []
+        for (let i = 0; i < this.selectList.length; i++) {
+          selectList.push(this.selectList[i].id)
         }
-      )
+        ajax.post(
+          url,
+          {
+            name: this.session.name,
+            keyword: this.session.keyword,
+            desc: this.session.desc,
+            photos: this.session.photos,
+            banner_pc: this.session.banner_pc,
+            banner_mobile: this.session.banner_mobile,
+            bgcolor: this.session.bgcolor,
+            start_at: this.session.start_at,
+            end_at: this.session.end_at,
+            selecStr: selectList.join(',')
+          },
+          res => {
+            if (res.data) {
+              this.$Message.success('添加专场成功')
+              setTimeout(() => {
+                this.$router.push('/sessions/sessions-list/sessions-list-index')
+              }, 1000)
+            }
+          },
+          e => {
+            console.log(e)
+          }
+        )
+      }
     },
     changeColor (color) {
       this.session.bgcolor = color
