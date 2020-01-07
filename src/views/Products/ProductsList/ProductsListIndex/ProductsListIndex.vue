@@ -3,7 +3,7 @@
     <Button class="spec-btn" type="primary" @click="onAdd()">添加商品</Button>
     <Divider />
     <div class="goods-table">
-      <Table border :columns="columns" :data="list">
+      <Table border :columns="columns" :data="list" :height="600">
         <template slot-scope="{ row }" slot="name">
           <div alt="row.name" src="javascript:void(0)" class="t-title">{{ row.name }}</div>
         </template>
@@ -31,11 +31,11 @@
         :total="dataTotal"
         :current="currentPage"
         :page-size="numsPerPage"
-        size="small"
         show-elevator
         show-sizer
         @on-change="onChange"
         class-name="goodpage"
+        show-total
       />
     </div>
     <div class="goods-detail">
@@ -223,7 +223,6 @@ export default {
         res => {
           if (res.data) {
             _this.list = _this.formateList(res.data.rows)
-            console.log(_this.list)
             _this.dataTotal = res.data.count
           }
         },

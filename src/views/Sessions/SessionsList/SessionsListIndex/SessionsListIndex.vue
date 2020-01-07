@@ -29,6 +29,7 @@
         size="small"
         show-elevator
         show-sizer
+        show-total
         class-name="sessionpage"
         @on-change="onChange"
       />
