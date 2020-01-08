@@ -202,33 +202,33 @@ export default {
       userform: {
         id: '',
         name: '', // 商品名称
-        promotion: '', // 商品推荐语
+        promotion: '性价比', // 商品推荐语
         category: [],
         category_id: null, // 商品分类id
-        keyword: null, // 商品关键词
-        unit: null, // 商品单元
+        keyword: '性价比', // 商品关键词
+        unit: '件', // 商品单元
         tags: null, // 商品标签
         brand_id: null, // 商品品牌
         supplier_id: null, // 商品供应商
-        base_sale: null, // 商品基础销量
-        base_click: null, // 商品基础点击
-        base_share: null, // 商品基础分享
+        base_sale: 1000, // 商品基础销量
+        base_click: 1000, // 商品基础点击
+        base_share: 1000, // 商品基础分享
         product_code: null, // 商品串码
         starttime: null, // 商品生产日期
-        validity_period: null, // 商品保质期
-        inventory: null, // 商品库存
-        inventory_warn: null, // 商品库存预警
-        place: null, // 商品产地
+        validity_period: 90, // 商品保质期
+        inventory: 10000, // 商品库存
+        inventory_warn: 100, // 商品库存预警
+        place: '广州', // 商品产地
         sku_ids: null, // 商品skuid 关联
         type_id: null, // 商品类型
         media: null, // 商品媒体数据地址（视频）
         detail: null, // 商品详情信息
         sku_code: null,
         sku_name: null,
-        sku_attr: null,
+        sku_attr: '统一',
         sku_market_price: null,
         sku_price: null,
-        sku_stock: null
+        sku_stock: 1000
       },
       category: [],
       tag: tagMock.data,

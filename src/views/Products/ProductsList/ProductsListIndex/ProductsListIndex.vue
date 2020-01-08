@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button class="spec-btn" type="primary" @click="onAdd()">添加商品</Button>
+    <Button class="spec-btn" type="primary" @click="onShowAdd()">添加商品</Button>
     <Divider />
     <div class="goods-table">
       <Table border :columns="columns" :data="list" :height="600">
@@ -78,6 +78,16 @@
         >{{currentDetail.detail}}</div>
       </Modal>
     </div>
+    <div>
+      <Modal
+        v-model="openway"
+        title="添加商品方式"
+        @on-ok="onShowCorm"
+        @on-cancel="onShowCorm">
+        <div><Button class="spec-btn" type="primary" @click="onAdd()">正常添加</Button></div>
+        <div style="margin-top:20px"><Button class="spec-btn" type="primary" @click="onKaola()">考拉导入</Button></div>
+    </Modal>
+    </div>
   </div>
 </template>
 
@@ -104,6 +114,7 @@ export default {
         keyword: '',
         inventory: 0
       },
+      openway: false,
       detailModal: false,
       dataTotal: 0, // 页总数
       currentPage: 1,
@@ -158,11 +169,20 @@ export default {
     this.getData()
   },
   methods: {
+    onShowAdd () {
+      this.openway = true
+    },
+    onKaola () {
+      this.$router.push('/products/products-list/products-import')
+    },
     onSetTranslate () {
     //  console.log("onSetTranslate");
     },
     ok () {
       // this.$Message.info("Clicked ok");
+    },
+    onShowCorm () {
+      this.openway = false
     },
     formateList (arr) {
       for (let item of arr) {

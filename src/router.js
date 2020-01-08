@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-const Login = resolve => require(['@/views/Login/Login'], resolve)
 const Home = resolve => require(['@/views/Home/Home'], resolve)
 const Products = resolve => require(['@/views/Products/Products'], resolve)
 const Sessions = resolve => require(['@/views/Sessions/Sessions'], resolve)
@@ -11,6 +10,7 @@ const ProductsSpec = resolve => require(['@/views/Products/ProductsSpec/Products
 const ProductsAdd = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd'], resolve)
 const ProductsAdd2 = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd2'], resolve)
 const ProductsAdd3 = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAdd3'], resolve)
+const ProductsImport = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsImport'], resolve)
 const ProductsListIndex = resolve => require(['@/views/Products/ProductsList/ProductsListIndex/ProductsListIndex'], resolve)
 const ProductsAddPic = resolve => require(['@/views/Products/ProductsList/ProductsAdd/ProductsAddPic'], resolve)
 
@@ -90,6 +90,11 @@ export default new Router({
               name: 'products-add',
               path: 'products-add',
               component: ProductsAdd
+            },
+            {
+              name: 'products-import',
+              path: 'products-import',
+              component: ProductsImport
             },
             {
               name: 'products-add2',
@@ -182,11 +187,6 @@ export default new Router({
           component: ProductsSpec
         }
       ]
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
     }
   ]
 })
