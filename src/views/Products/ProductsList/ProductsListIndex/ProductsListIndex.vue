@@ -10,8 +10,8 @@
         <template slot-scope="{ row }" slot="category">
           <div> {{formatCategory(row.category_id)}}</div>
         </template>
-        <template slot-scope="{ row }" slot="brand">
-          <div>{{row.good_goodsbrand.name}}</div>
+        <template slot-scope="{ row }" slot="marketprice">
+          <div>{{row.good_goodsskus[0].market_price}}</div>
         </template>
         <template slot-scope="{ row }" slot="supplier">
           <div>{{row.good_goodssupplier.name}}</div>
@@ -133,12 +133,8 @@ export default {
           slot: 'photo'
         },
         {
-          title: '商品关键词',
-          key: 'keyword'
-        },
-        {
-          title: '商品品牌',
-          slot: 'brand'
+          title: '商品市场价',
+          slot: 'marketprice'
         },
         {
           title: '商品供应商',

@@ -38,14 +38,14 @@
 </template>
 
 <script>
-import categoryMock from "@/mock/mcategory";
-import tagMock from "@/mock/mtags";
-import ajax from "@/util/ajax";
-import config from "@/config/config";
-import api from "@/config/api";
+import categoryMock from '@/mock/mcategory'
+import tagMock from '@/mock/mtags'
+import ajax from '@/util/ajax'
+import config from '@/config/config'
+import api from '@/config/api'
 export default {
-  name: "product-add",
-  data() {
+  name: 'product-add',
+  data () {
     return {
       category: categoryMock.data,
       tag: tagMock.data,
@@ -57,36 +57,36 @@ export default {
         brand_photo: null,
         desc: null
       }
-    };
+    }
   },
-  created() {},
+  created () {},
   methods: {
-    onNext() {
-      const url = config.host + api.add_good_brand;
-      let caform = this.caform;
+    onNext () {
+      const url = config.host + api.add_good_brand
+      let caform = this.caform
       ajax.post(
         url,
         {
-            name: caform.name,
-            desc: caform.desc,
-            is_recommend: caform.is_recommend,
-            photo: caform.photo,
-            brand_photo: caform.brand_photo,
+          name: caform.name,
+          desc: caform.desc,
+          is_recommend: caform.is_recommend,
+          photo: caform.photo,
+          brand_photo: caform.brand_photo
         },
         res => {
           if (res.data) {
-            const { id } = res.data;
-            this.$router.push("/products/products-brand/products-brand-index");
+            const { id } = res.data
+            this.$router.push('/products/products-brand/products-brand-index')
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
+      )
       //  console.log(url);
     }
   }
-};
+}
 </script>
 <style lang="less">
 .form-warp {
