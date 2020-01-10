@@ -54,8 +54,7 @@ export default {
         desc: null,
         is_recommend: '0',
         photo: null,
-        brand_photo: null,
-        desc: null
+        brand_photo: null
       }
     }
   },
@@ -75,7 +74,6 @@ export default {
         },
         res => {
           if (res.data) {
-            const { id } = res.data
             this.$router.push('/products/products-brand/products-brand-index')
           }
         },

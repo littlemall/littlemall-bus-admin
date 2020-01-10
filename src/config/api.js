@@ -11,6 +11,7 @@ export default {
   'query_good_category': '/goods/admin/query_category', // 根据ID查询分裂数据信息
   'add_good_category': '/goods/admin/add_good_category', // 添加分类数据信息
   'update_category': '/goods/admin/update_category', // 更新商品分类信息
+  'upload_category_pic': '/category/admin/upload_pic', // 上传商品分类图片
 
   'add_good_brand': '/goods/admin/add_good_brand', // 添加商品品牌接口
   'query_brand_list': '/goods/admin/query_brand_list', // 查询商品品牌列表接口

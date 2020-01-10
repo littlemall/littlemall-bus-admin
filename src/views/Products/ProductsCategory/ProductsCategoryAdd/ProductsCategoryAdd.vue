@@ -60,6 +60,20 @@
             </FormItem>
           </Col>
         </Row>
+        <Row>
+            <Col span="12">
+              <Upload
+              ref="uploadPic"
+              :on-success="handlePic"
+              :action="uploadCategory"
+              >
+                  <Button icon="ios-cloud-upload-outline">上传专场图片(200*200)</Button>
+              </Upload>
+              <div>
+                <img width="100px" :src="caform.photo"/>
+              </div>
+          </Col>
+        </Row>
         <Button style="position:fixed; bottom:10px" @click="onNext" type="primary">保存</Button>
       </Form>
     </div>
@@ -67,34 +81,38 @@
 </template>
 
 <script>
-import categoryMock from "@/mock/mcategory";
-import tagMock from "@/mock/mtags";
-import ajax from "@/util/ajax";
-import config from "@/config/config";
-import api from "@/config/api";
+import categoryMock from '@/mock/mcategory'
+import tagMock from '@/mock/mtags'
+import ajax from '@/util/ajax'
+import config from '@/config/config'
+import api from '@/config/api'
 export default {
-  name: "product-add",
-  data() {
+  name: 'product-add',
+  data () {
     return {
       category: categoryMock.data,
       tag: tagMock.data,
+      uploadCategory: config.host + api.upload_category_pic,
       caform: {
         name: null,
         name_simple: null,
         pid: null,
-        is_show: "0",
+        is_show: '0',
         sort: null,
         photo: null,
         keyword: null,
         desc: null
       }
-    };
+    }
   },
-  created() {},
+  created () {},
   methods: {
-    onNext() {
-      const url = config.host + api.add_good_category;
-      let caform = this.caform;
+    handlePic (res, file) {
+      this.caform.photo = 'http://10.18.120.228:7001' + res.data.path
+    },
+    onNext () {
+      const url = config.host + api.add_good_category
+      let caform = this.caform
       ajax.post(
         url,
         {
@@ -109,18 +127,16 @@ export default {
         },
         res => {
           if (res.data) {
-            const { id } = res.data;
-            this.$router.push("/products/products-category/products-category-index");
+            this.$router.push('/products/products-category/products-category-index')
           }
         },
         e => {
-          console.log(e);
+          console.log(e)
         }
-      );
-      //  console.log(url);
+      )
     }
   }
-};
+}
 </script>
 <style lang="less">
 .form-warp {
