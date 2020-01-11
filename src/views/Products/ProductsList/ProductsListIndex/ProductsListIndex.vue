@@ -198,10 +198,9 @@ export default {
       return narr.join(',')
     },
     getCategoryById (id) {
-      console.log(id)
       let result
       for (let i = 0; i < this.categorys.length; i++) {
-        if (id === this.categorys[i].id) {
+        if (id === this.categorys[i].oid) {
           result = this.categorys[i]
         }
       }
@@ -239,6 +238,7 @@ export default {
         res => {
           if (res.data) {
             _this.list = _this.formateList(res.data.rows)
+            console.log(_this.list)
             _this.dataTotal = res.data.count
           }
         },
