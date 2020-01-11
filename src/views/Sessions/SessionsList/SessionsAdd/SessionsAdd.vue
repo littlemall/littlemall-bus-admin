@@ -81,6 +81,23 @@
         </Form>
          <Divider />
         <h3 style="margin-bottom:10px">添加关联商品</h3>
+        <Form>
+      <Row>
+          <Col span="6">
+            <FormItem label="商品名称" :label-width="80">
+              <Input v-model="userform.name" style="width: 240px" placeholder="商品名称" />
+            </FormItem>
+          </Col>
+          <Col span="6">
+            <FormItem label="商品分类" :label-width="80">
+               <Cascader style="width: 240px" :data="category" v-model="userform.category"></Cascader>
+            </FormItem>
+          </Col>
+          <Col span="6">
+            <Button class="spec-btn" type="primary" @click="onSearch()">查询</Button>
+          </Col>
+      </Row>
+     </Form>
           <Table
           ref="goodselect"
           border
@@ -108,6 +125,7 @@
           size="small"
           show-elevator
           show-sizer
+          show-total
           @on-change="onChange"
           class-name="goodpage"
         />
@@ -138,9 +156,15 @@ export default {
         start_at: '',
         end_at: ''
       },
+      userform: {
+        name: '',
+        category: []
+      },
+      goodname: null,
+      categoryStr: null,
       dataTotal: 1, // 页总数
       currentPage: 1,
-      numsPerPage: 200,
+      numsPerPage: 100,
       columns: [
         {
           title: '商品名称',
@@ -165,12 +189,15 @@ export default {
       ],
       list: [],
       categorys: [],
-      selectList: []
+      selectList: [],
+      category: []
     }
   },
   created () {
     this.sessionId = this.$route.query.id
     this.getCategoryList()
+    // 获取商品树形分类接口
+    this.getGoodsCategoryTree()
     if (this.sessionId) {
     // 编辑页面
       // 获取专场所属商品列表
@@ -205,6 +232,30 @@ export default {
     }
   },
   methods: {
+    onSearch () {
+      this.currentPage = 1
+      this.goodname = this.userform.name
+      if (this.userform.category.length > 0) {
+        this.categoryStr = this.userform.category.join(',')
+      }
+      this.getData()
+    },
+    getGoodsCategoryTree () {
+      let _this = this
+      const url = config.host + api.query_category_tree
+      return _this.$http.get(
+        url,
+        {},
+        res => {
+          if (res.data) {
+            _this.category = res.data
+          }
+        },
+        e => {
+          console.log(e)
+        }
+      )
+    },
     formatEditGoods (rows) {
       this.dataTotal = rows.length
       let temparr = []
@@ -355,7 +406,9 @@ export default {
         url,
         {
           page: _this.currentPage,
-          size: _this.numsPerPage
+          size: _this.numsPerPage,
+          name: _this.goodname,
+          category: _this.categoryStr
         },
         res => {
           if (res.data) {
