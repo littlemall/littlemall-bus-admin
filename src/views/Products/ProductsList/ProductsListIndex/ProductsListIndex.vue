@@ -2,6 +2,24 @@
   <div>
     <Button class="spec-btn" type="primary" @click="onShowAdd()">添加商品</Button>
     <Divider />
+     <Form>
+      <Row>
+          <Col span="6">
+            <FormItem label="商品名称" :label-width="80">
+              <Input v-model="userform.name" style="width: 240px" placeholder="商品名称" />
+            </FormItem>
+          </Col>
+          <Col span="6">
+            <FormItem label="商品分类" :label-width="80">
+               <Cascader style="width: 240px" :data="category" v-model="userform.category"></Cascader>
+            </FormItem>
+          </Col>
+          <Col span="6">
+            <Button class="spec-btn" type="primary" @click="onSearch()">查询</Button>
+          </Col>
+      </Row>
+     </Form>
+     <Divider />
     <div class="goods-table">
       <Table border :columns="columns" :data="list" :height="600">
         <template slot-scope="{ row }" slot="name">
@@ -98,6 +116,12 @@ export default {
   name: 'product-list-index',
   data () {
     return {
+      userform: {
+        name: '',
+        category: []
+      },
+      goodname: null,
+      categoryStr: null,
       message: 'Hi from Vue',
       swiperOptionA: {
         pagination: {
@@ -157,14 +181,42 @@ export default {
         }
       ],
       list: [],
-      categorys: []
+      categorys: [],
+      category: []
+
     }
   },
   created () {
     this.getCategoryList()
+    // 获取商品树形分类接口
+    this.getGoodsCategoryTree()
     this.getData()
   },
   methods: {
+    onSearch () {
+      this.currentPage = 1
+      this.goodname = this.userform.name
+      if (this.userform.category.length > 0) {
+        this.categoryStr = this.userform.category.join(',')
+      }
+      this.getData()
+    },
+    getGoodsCategoryTree () {
+      let _this = this
+      const url = config.host + api.query_category_tree
+      return _this.$http.get(
+        url,
+        {},
+        res => {
+          if (res.data) {
+            _this.category = res.data
+          }
+        },
+        e => {
+          console.log(e)
+        }
+      )
+    },
     onShowAdd () {
       this.openway = true
     },
@@ -193,7 +245,9 @@ export default {
       let narr = []
       for (let item of arr) {
         let res = this.getCategoryById(parseInt(item))
-        narr.push(res.name)
+        if (res) {
+          narr.push(res.name)
+        }
       }
       return narr.join(',')
     },
@@ -216,7 +270,6 @@ export default {
           size: 500
         },
         res => {
-          console.log(res.data)
           if (res.data) {
             _this.categorys = res.data.rows
           }
@@ -233,7 +286,9 @@ export default {
         url,
         {
           page: _this.currentPage,
-          size: _this.numsPerPage
+          size: _this.numsPerPage,
+          name: _this.goodname,
+          category: _this.categoryStr
         },
         res => {
           if (res.data) {
