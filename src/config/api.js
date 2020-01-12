@@ -12,6 +12,7 @@ export default {
   'add_good_category': '/goods/admin/add_good_category', // 添加分类数据信息
   'update_category': '/goods/admin/update_category', // 更新商品分类信息
   'upload_category_pic': '/category/admin/upload_pic', // 上传商品分类图片
+  'delete_category': '/goods/admin/delete_category', // 删除商品分类（物理）
 
   'add_good_brand': '/goods/admin/add_good_brand', // 添加商品品牌接口
   'query_brand_list': '/goods/admin/query_brand_list', // 查询商品品牌列表接口
