@@ -1,5 +1,5 @@
 # setting node.js version
-FROM node:10.12.0
+FROM node:12.13.0
 
 # make dir
 RUN mkdir -p /Users/ronghua.wu/prod/littlemalladmin
